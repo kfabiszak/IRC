@@ -18,13 +18,16 @@ typedef unsigned int UInt32;
 
 struct sockaddr_in sockAddr, clientSockAddr;
 const int QUEUE_SIZE = 10;
-const int USER_SIZE = 50;
+const int USER_SIZE = 25;
 const int ROOM_SIZE = 50;
 const int MESSAGE_SIZE = 100;
 const int USERS_IN_ROOM = 25;
 const int STRING_SIZE = 256;
 
 struct Message {
+    char*  name;
+    char*  cmd;
+    char*  arg;
     char*  text;
     UInt32 length;
     int    toSend;
@@ -33,7 +36,6 @@ struct Message {
 struct User {
     char  ip[STRING_SIZE];
     char  login[STRING_SIZE];
-    int   id;
     int   descriptor;
     int   isValid;
 };
@@ -57,6 +59,7 @@ void initSockAddr() {
 
 void initStruct() {
     for(int r = 0; r < ROOM_SIZE; r++) {
+        rooms[r].isDirty = 0;
         rooms[r].size = USERS_IN_ROOM;
         for(int u = 0; u < rooms[r].size; u++) {
             rooms[r].users[u].isValid = 0;
@@ -132,16 +135,100 @@ int sendMsg (int socket, char* message, UInt32 length) {
     return 1;
 }
 
+struct Message decodeMSG(struct Message Message) {
+    char* header;
+    header = strtok (Message.text,"#");
+    for (int p = 0; header != NULL; p++) {
+        switch(p) {
+            case 0:
+                Message.name = header;
+                break;
+            case 1:
+                Message.cmd = header;
+                break;
+            case 2:
+                Message.arg = header;
+                break;
+            default:
+                Message.text = header;
+                break;
+        }
+        header = strtok (NULL, "#");
+    }
+    return Message;
+}
+
+void addUserToRoom(struct User user, int roomNumber) {
+    for(int u = 0; u < USERS_IN_ROOM; u++) {
+        if(!rooms[roomNumber].users[u].isValid) {
+            rooms[roomNumber].users[u] = user;
+            printf("#User %d join to room %d.\n", user.descriptor, roomNumber);
+            break;
+        }
+    }
+}
+
+void removeUserFromRoom(struct User user, int roomNumber) {
+    for(int u = 0; u < USERS_IN_ROOM; u++) {
+        if(rooms[roomNumber].users[u].isValid == 1 && (rooms[roomNumber].users[u].descriptor == user.descriptor)) {
+            rooms[roomNumber].users[u].isValid = 0;
+            rooms[roomNumber].users[u].descriptor = NULL;
+            printf("#User %d leave from room %d.\n", user.descriptor, roomNumber);
+            break;
+        }
+    }
+}
+
+struct User findUser(int descriptor) {
+    for (int u = 0 ; u < USER_SIZE ; u++) {
+        if(rooms[0].users[u].descriptor == descriptor) {
+            return rooms[0].users[u];
+        }
+    }
+    struct User empty;
+    return empty;
+}
+
+int checkUserInRoom(int descriptor, int roomNumber) {
+    for(int u = 0 ; u < USERS_IN_ROOM ; u++) {
+        if(rooms[roomNumber].users[u].descriptor == descriptor) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void saveMsg(int roomNumber, struct Message Message) {
     for(int m = 0; m < MESSAGE_SIZE; m++) {
         if(rooms[roomNumber].messages[m].toSend != 1) {
-            printf("Saved message i:%d text:%s\n", m, Message.text);
             rooms[roomNumber].messages[m] = Message;
+            rooms[roomNumber].messages[m].name = Message.name;
+            rooms[roomNumber].messages[m].arg = Message.arg;
             rooms[roomNumber].messages[m].text = Message.text;
             rooms[roomNumber].messages[m].toSend = 2;
             rooms[roomNumber].isDirty = 1;
+            printf("#Saved message i:%d text:'%s'.\n", m, Message.text);
             break;
         }
+    }
+}
+
+void runCmd(struct Message Message) {
+    Message = decodeMSG(Message);
+    int userDesc = atoi(Message.name);
+    int roomNumber = atoi(Message.arg);
+
+    if(strcmp(Message.cmd, "send") == 0) {
+        if(checkUserInRoom(userDesc, roomNumber))
+            saveMsg(roomNumber, Message);
+    } else if(strcmp(Message.cmd, "login") == 0) {
+        
+    } else if(strcmp(Message.cmd, "logout") == 0) {
+        
+    } else if(strcmp(Message.cmd, "join") == 0) {
+        addUserToRoom(findUser(userDesc), roomNumber);
+    } else if(strcmp(Message.cmd, "leave") == 0) {
+        removeUserFromRoom(findUser(userDesc), roomNumber);
     }
 }
 
@@ -154,7 +241,6 @@ int main(int argc, char* argv[]) {
     initStruct();
     int tmpSizeOfFileDescriptor;
     
-    // socket
     int clientSocketFileDescriptor;
     int serverSocketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
     int on = 1;
@@ -192,8 +278,7 @@ int main(int argc, char* argv[]) {
     nMaxfd = serverSocketFileDescriptor;
     tmpSizeOfFileDescriptor = sizeof(struct sockaddr);
     
-    // accept
-    printf("#SERVER#\n");
+    printf("#SERVER RUNNING#\n");
     
     //main loop
     while(1) {
@@ -244,16 +329,10 @@ int main(int argc, char* argv[]) {
             strcpy( User.ip, inet_ntoa((struct in_addr)clientSockAddr.sin_addr));
             strcpy( User.login, "login");
             
-            //Search empty slot for new user
-            for(int i = 0; i < USERS_IN_ROOM; i++) {
-                if(!rooms[0].users[i].isValid) {
-                    rooms[0].users[i] = User;
-                    printf("New User at %d with desc:%d\n", i, User.descriptor);
-                    break;
-                }
-            }
+            addUserToRoom(User, 0);
         }
         
+        //READ MSG FROM ALL VALID USERS
         for (int u = 0; u < USERS_IN_ROOM; u++) {
             user = rooms[0].users[u];
             userDesc = user.descriptor;
@@ -261,7 +340,7 @@ int main(int argc, char* argv[]) {
                 if (FD_ISSET(userDesc, &fsRmask)) {
                     char* readBuffer;
                     readMsg(userDesc, &readBuffer);
-                    char* readHeader = "User_";
+                    char* readHeader = "";
                     char* readResult = (char *) malloc(1 + strlen(readHeader)+ strlen(readBuffer) );
                     sprintf(readResult,"%s%d: %s", readHeader, userDesc, readBuffer);
                     printf("client_%d: %s\n", userDesc, readResult);
@@ -269,16 +348,17 @@ int main(int argc, char* argv[]) {
                     struct Message message;
                     message.text = readResult;
                     message.length = strlen(readResult);
-                    saveMsg(0, message);
+                    runCmd(message);
                 }
             }
         }
         
+        //IF ROOM IS DIRTY SET EACH USER MASK TO WRITE
         for (int r = 0; r < ROOM_SIZE; r++) {
             room = rooms[r];
-            if(room.isDirty == 1) {
+            if(room.isDirty) {
                 for(int u = 0; u < room.size; u++) {
-                    if(room.users[u].isValid == 1) {
+                    if(room.users[u].isValid) {
                         userDesc = room.users[u].descriptor;
                         FD_SET(userDesc, &fsMask);
                     }
@@ -287,6 +367,7 @@ int main(int argc, char* argv[]) {
             rooms[r].isDirty = 0;
         }
         
+        //IF USER HAS SET WRITE MASK SEND MSG TO THAT USER
         for (int r = 0; r < ROOM_SIZE; r++) {
             room = rooms[r];
             for (int u = 0; u < room.size; u++) {
@@ -295,7 +376,7 @@ int main(int argc, char* argv[]) {
                 if (user.isValid && FD_ISSET(userDesc, &fsWmask)) {
                     for(int m = 0; m < MESSAGE_SIZE; m++) {
                         message = room.messages[m];
-                        if(message.toSend == 1) {
+                        if(message.toSend) {
                             printf("sending5\n");
                             sendMsg(userDesc, message.text, message.length);
                         }
