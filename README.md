@@ -1,29 +1,30 @@
-#Komunikator IRC
+<h1>Komunikator IRC</h1>
 
 ---
 
-Protokół komunikacyjny
+<h2>Protokół komunikacyjny</h2>
 
-Wysyłanie wiadomości:
+<h3>Wysyłanie wiadomości:</h3>
 - pierwsza wiadomość zawierająca wielkość wysyłanej wiadomości
 - druga wiadomość zawierająca tekst wiadomości
     
-Kodowanie wiadomości: #cmd#arg1#arg2
+<h3>Kodowanie wiadomości:</h3>
+- <code>#cmd#arg1#arg2</code>
 
 Wysyłanie tekstu:
-#send#<room_number>#<text>
+- <code>#send#room_number#text</code>
 
 Logowanie:
-#login#<nick_name>
+- <code>#login#nick_name</code>
 
-Wylogowanie
-#logout
+Wylogowanie:
+- <code>#logout</code>
 
-Dołączanie do pokoju
-#join#<room_number>
+Dołączanie do pokoju:
+- <code>#join#room_number</code>
 
-Opuszczenie pokoju
-#leave#<room_number>
+Opuszczenie pokoju:
+- <code>#leave#room_number</code>
 
 ---
     
