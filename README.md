@@ -15,7 +15,7 @@ Wysyłanie tekstu:
 - <code>#send#room_number#text</code>
 
 Logowanie:
-- <code>#login#nick_name</code>
+- <code>#login#nickname</code>
 
 Wylogowanie:
 - <code>#logout</code>
