@@ -31,6 +31,7 @@ struct Message {
     char*  text;
     UInt32 length;
     int    toSend;
+    int    desc;
 };
 
 struct User {
@@ -46,7 +47,7 @@ struct Room {
     int   full;
     int   isDirty;
     struct Message messages[MESSAGE_SIZE];
-    struct User users[USERS_IN_ROOM];
+    struct User *users[USERS_IN_ROOM];
 };
 
 struct Room rooms[ROOM_SIZE];
@@ -62,7 +63,9 @@ void initStruct() {
         rooms[r].isDirty = 0;
         rooms[r].size = USERS_IN_ROOM;
         for(int u = 0; u < rooms[r].size; u++) {
-            rooms[r].users[u].isValid = 0;
+            rooms[r].users[u] = malloc(sizeof(struct User));
+            rooms[r].users[u]->isValid = 0;
+            rooms[r].users[u]->descriptor = -1;
         }
         for(int m = 0; m < MESSAGE_SIZE; m++) {
             rooms[r].messages[m].toSend = 0;
@@ -135,63 +138,79 @@ int sendMsg (int socket, char* message, UInt32 length) {
     return 1;
 }
 
-struct Message decodeMSG(struct Message Message) {
+void decodeMSG(struct Message *Message) {
     char* header;
-    header = strtok (Message.text,"#");
+    header = strtok (Message->text,"#");
     for (int p = 0; header != NULL; p++) {
         switch(p) {
             case 0:
-                Message.name = header;
+                Message->cmd = header;
                 break;
             case 1:
-                Message.cmd = header;
+                Message->arg = header;
                 break;
-            case 2:
-                Message.arg = header;
-                break;
-            default:
-                Message.text = header;
+            default: //todo cutting text on #
+                Message->text = header;
                 break;
         }
         header = strtok (NULL, "#");
     }
-    return Message;
 }
 
-void addUserToRoom(struct User user, int roomNumber) {
+void addUserToRoom(struct User *user, int roomNumber) { //#todo validate roomNumber
     for(int u = 0; u < USERS_IN_ROOM; u++) {
-        if(!rooms[roomNumber].users[u].isValid) {
+        if(roomNumber == 0 && rooms[roomNumber].users[u]->isValid == 0) {
+            rooms[roomNumber].users[u]->descriptor = user->descriptor;
+            strcpy(rooms[roomNumber].users[u]->ip, user->ip);
+            strcpy(rooms[roomNumber].users[u]->login, user->login);
+            rooms[roomNumber].users[u]->isValid = 1;
+            printf("#New User %d join to room %d.\n", rooms[roomNumber].users[u]->descriptor, roomNumber);
+            break;
+            
+        }
+        else if(rooms[roomNumber].users[u]->isValid == 0) {
             rooms[roomNumber].users[u] = user;
-            printf("#User %d join to room %d.\n", user.descriptor, roomNumber);
+            printf("#User %d join to room %d.\n", user->descriptor, roomNumber);
             break;
         }
     }
 }
 
-void removeUserFromRoom(struct User user, int roomNumber) {
+void clearUser(int userDesc, int roomNumber) {
     for(int u = 0; u < USERS_IN_ROOM; u++) {
-        if(rooms[roomNumber].users[u].isValid == 1 && (rooms[roomNumber].users[u].descriptor == user.descriptor)) {
-            rooms[roomNumber].users[u].isValid = 0;
-            rooms[roomNumber].users[u].descriptor = NULL;
-            printf("#User %d leave from room %d.\n", user.descriptor, roomNumber);
+        if(rooms[roomNumber].users[u]->isValid == 1 && (rooms[roomNumber].users[u]->descriptor == userDesc)) {
+            rooms[roomNumber].users[u]->isValid = 0;
+            strcpy(rooms[roomNumber].users[u]->ip, "");
+            strcpy(rooms[roomNumber].users[u]->login, "");
+            rooms[roomNumber].users[u]->descriptor = NULL;
             break;
         }
     }
 }
 
-struct User findUser(int descriptor) {
+void removeUserFromRoom(struct User *user, int roomNumber) {
+    clearUser(user->descriptor, roomNumber);
+    printf("#User %d leave from room %d.\n", user->descriptor, roomNumber);
+}
+
+void changeUserLogin(struct User *user, char* newLogin) {
+    printf("#User %d change login '%s' to '%s'.\n", user->descriptor, user->login, newLogin);
+    strcpy(user->login, newLogin);
+}
+
+struct User *findUser(int descriptor) {
     for (int u = 0 ; u < USER_SIZE ; u++) {
-        if(rooms[0].users[u].descriptor == descriptor) {
+        if(rooms[0].users[u]->descriptor == descriptor) {
             return rooms[0].users[u];
         }
     }
     struct User empty;
-    return empty;
+    return &empty;
 }
 
 int checkUserInRoom(int descriptor, int roomNumber) {
     for(int u = 0 ; u < USERS_IN_ROOM ; u++) {
-        if(rooms[roomNumber].users[u].descriptor == descriptor) {
+        if(rooms[roomNumber].users[u]->descriptor == descriptor) {
             return 1;
         }
     }
@@ -203,31 +222,38 @@ void saveMsg(int roomNumber, struct Message Message) {
         if(rooms[roomNumber].messages[m].toSend != 1) {
             rooms[roomNumber].messages[m] = Message;
             rooms[roomNumber].messages[m].name = Message.name;
-            rooms[roomNumber].messages[m].arg = Message.arg;
-            rooms[roomNumber].messages[m].text = Message.text;
+            char* result = (char *) malloc(1 + strlen(Message.name)+ strlen(Message.text) );
+            sprintf(result, "%s: %s", Message.name, Message.text);
+            strcpy(rooms[roomNumber].messages[m].text, result);
             rooms[roomNumber].messages[m].toSend = 2;
             rooms[roomNumber].isDirty = 1;
-            printf("#Saved message i:%d text:'%s'.\n", m, Message.text);
+            printf("#Saved message i:%d text:'%s'.\n", m, rooms[roomNumber].messages[m].text);
             break;
         }
     }
 }
 
-void runCmd(struct Message Message) {
-    Message = decodeMSG(Message);
-    int userDesc = atoi(Message.name);
-    int roomNumber = atoi(Message.arg);
+void runCmd(int userDesc, char *msg) {
+    struct Message message;
+    message.text = msg;
+    message.length = strlen(msg);
+    message.desc = userDesc;
+    message.name = findUser(userDesc)->login;
+    
+    decodeMSG(&message);
 
-    if(strcmp(Message.cmd, "send") == 0) {
+    int roomNumber = atoi(message.arg);
+    
+    if(strcmp(message.cmd, "send") == 0) {
         if(checkUserInRoom(userDesc, roomNumber))
-            saveMsg(roomNumber, Message);
-    } else if(strcmp(Message.cmd, "login") == 0) {
+            saveMsg(roomNumber, message);
+    } else if(strcmp(message.cmd, "login") == 0) {
+        changeUserLogin(findUser(userDesc), message.arg);
+    } else if(strcmp(message.cmd, "logout") == 0) {
         
-    } else if(strcmp(Message.cmd, "logout") == 0) {
-        
-    } else if(strcmp(Message.cmd, "join") == 0) {
+    } else if(strcmp(message.cmd, "join") == 0) {
         addUserToRoom(findUser(userDesc), roomNumber);
-    } else if(strcmp(Message.cmd, "leave") == 0) {
+    } else if(strcmp(message.cmd, "leave") == 0) {
         removeUserFromRoom(findUser(userDesc), roomNumber);
     }
 }
@@ -294,9 +320,9 @@ int main(int argc, char* argv[]) {
         
         //add client sockets to set
         for (int i = 0 ; i < USER_SIZE ; i++) {
-            user = rooms[0].users[i];
+            user = *rooms[0].users[i];
             userDesc = user.descriptor;
-            if(user.isValid) {
+            if(user.isValid == 1) {
                 if(userDesc > 0)
                     FD_SET(userDesc , &fsRmask);
                 if(userDesc > maxDesc)
@@ -323,32 +349,27 @@ int main(int argc, char* argv[]) {
                 exit(1);
             }
             
+            //CREATE NEW USER
             struct User User;
             User.descriptor = clientSocketFileDescriptor;
             User.isValid = 1;
             strcpy( User.ip, inet_ntoa((struct in_addr)clientSockAddr.sin_addr));
-            strcpy( User.login, "login");
+            strcpy( User.login, "");
             
-            addUserToRoom(User, 0);
+            addUserToRoom(&User, 0);
         }
         
         //READ MSG FROM ALL VALID USERS
         for (int u = 0; u < USERS_IN_ROOM; u++) {
-            user = rooms[0].users[u];
+            user = *rooms[0].users[u];
             userDesc = user.descriptor;
-            if(user.isValid) {
+            if(user.isValid == 1) {
                 if (FD_ISSET(userDesc, &fsRmask)) {
                     char* readBuffer;
                     readMsg(userDesc, &readBuffer);
-                    char* readHeader = "";
-                    char* readResult = (char *) malloc(1 + strlen(readHeader)+ strlen(readBuffer) );
-                    sprintf(readResult,"%s%d: %s", readHeader, userDesc, readBuffer);
-                    printf("client_%d: %s\n", userDesc, readResult);
+                    printf("client_%d: %s\n", userDesc, readBuffer);
                     
-                    struct Message message;
-                    message.text = readResult;
-                    message.length = strlen(readResult);
-                    runCmd(message);
+                    runCmd(userDesc, readBuffer);
                 }
             }
         }
@@ -358,8 +379,8 @@ int main(int argc, char* argv[]) {
             room = rooms[r];
             if(room.isDirty) {
                 for(int u = 0; u < room.size; u++) {
-                    if(room.users[u].isValid) {
-                        userDesc = room.users[u].descriptor;
+                    if(room.users[u]->isValid == 1) {
+                        userDesc = room.users[u]->descriptor;
                         FD_SET(userDesc, &fsMask);
                     }
                 }
@@ -371,18 +392,18 @@ int main(int argc, char* argv[]) {
         for (int r = 0; r < ROOM_SIZE; r++) {
             room = rooms[r];
             for (int u = 0; u < room.size; u++) {
-                user = room.users[u];
+                user = *room.users[u];
                 userDesc = user.descriptor;
-                if (user.isValid && FD_ISSET(userDesc, &fsWmask)) {
-                    for(int m = 0; m < MESSAGE_SIZE; m++) {
-                        message = room.messages[m];
-                        if(message.toSend) {
-                            printf("sending5\n");
-                            sendMsg(userDesc, message.text, message.length);
+                if(user.isValid == 1)
+                    if (FD_ISSET(userDesc, &fsWmask)) {
+                        for(int m = 0; m < MESSAGE_SIZE; m++) {
+                            message = room.messages[m];
+                            if(message.toSend) {
+                                sendMsg(userDesc, message.text, message.length);
+                            }
                         }
+                        FD_CLR(userDesc, &fsMask);
                     }
-                    FD_CLR(userDesc, &fsMask);
-                }
             }
             for (int m = 0; m < room.size; m++) {
                 if(room.messages[m].toSend > 0)
