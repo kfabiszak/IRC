@@ -18,10 +18,10 @@ typedef unsigned int UInt32;
 
 struct sockaddr_in sockAddr, clientSockAddr;
 const int QUEUE_SIZE = 10;
-const int USER_SIZE = 25;
+const int USER_SIZE = 50;
 const int ROOM_SIZE = 50;
 const int MESSAGE_SIZE = 100;
-const int USERS_IN_ROOM = 25;
+const int USERS_IN_ROOM = 10;
 const int STRING_SIZE = 256;
 
 struct Message {
@@ -47,7 +47,7 @@ struct Room {
     int   full;
     int   isDirty;
     struct Message messages[MESSAGE_SIZE];
-    struct User *users[USERS_IN_ROOM];
+    struct User **users;
 };
 
 struct Room rooms[ROOM_SIZE];
@@ -59,7 +59,11 @@ void initSockAddr() {
 }
 
 void initStruct() {
+    int size = USER_SIZE;
     for(int r = 0; r < ROOM_SIZE; r++) {
+        rooms[r].users = malloc(sizeof(struct User) * size);
+        if(r == 0)
+            size = USERS_IN_ROOM;
         rooms[r].isDirty = 0;
         rooms[r].size = USERS_IN_ROOM;
         for(int u = 0; u < rooms[r].size; u++) {
@@ -140,40 +144,42 @@ int sendMsg (int socket, char* message, UInt32 length) {
 
 void decodeMSG(struct Message *Message) {
     char* header;
-    header = strtok (Message->text,"#");
+    char* dividedMsg = (char *) malloc(strlen(Message->text));
+    strcpy(dividedMsg, Message->text);
+    header = strtok (dividedMsg, "#");
+
     for (int p = 0; header != NULL; p++) {
-        switch(p) {
-            case 0:
-                Message->cmd = header;
-                break;
-            case 1:
-                Message->arg = header;
-                break;
-            default: //todo cutting text on #
-                Message->text = header;
-                break;
+        if (p == 0)
+            Message->cmd = header;
+        else if (p == 1)
+            Message->arg = header;
+        else if (p == 2) {
+            Message->text += (3 + strlen(Message->cmd) + strlen(Message->arg));
+            break;
         }
         header = strtok (NULL, "#");
     }
 }
 
-void addUserToRoom(struct User *user, int roomNumber) { //#todo validate roomNumber
-    for(int u = 0; u < USERS_IN_ROOM; u++) {
-        if(roomNumber == 0 && rooms[roomNumber].users[u]->isValid == 0) {
-            rooms[roomNumber].users[u]->descriptor = user->descriptor;
-            strcpy(rooms[roomNumber].users[u]->ip, user->ip);
-            strcpy(rooms[roomNumber].users[u]->login, user->login);
-            rooms[roomNumber].users[u]->isValid = 1;
-            printf("#New User %d join to room %d.\n", rooms[roomNumber].users[u]->descriptor, roomNumber);
-            break;
-            
+void addUserToRoom(struct User *user, int roomNumber) {
+    if(roomNumber < ROOM_SIZE)
+        for(int u = 0; u < USERS_IN_ROOM; u++) {
+            if(roomNumber == 0 && rooms[roomNumber].users[u]->isValid == 0) {
+                rooms[roomNumber].users[u]->descriptor = user->descriptor;
+                strcpy(rooms[roomNumber].users[u]->ip, user->ip);
+                strcpy(rooms[roomNumber].users[u]->login, user->login);
+                rooms[roomNumber].users[u]->isValid = 1;
+                printf("#New User %d join to room %d.\n", rooms[roomNumber].users[u]->descriptor, roomNumber);
+                break;
+                
+            }
+            else if(rooms[roomNumber].users[u]->isValid == 0) { //#todo send answer
+                rooms[roomNumber].users[u] = user;
+                printf("#User %d join to room %d.\n", user->descriptor, roomNumber);
+                break;
+            }
         }
-        else if(rooms[roomNumber].users[u]->isValid == 0) {
-            rooms[roomNumber].users[u] = user;
-            printf("#User %d join to room %d.\n", user->descriptor, roomNumber);
-            break;
-        }
-    }
+    else printf("#User %d cant join to room %d.\n", user->descriptor, roomNumber);
 }
 
 void clearUser(int userDesc, int roomNumber) {
@@ -222,7 +228,7 @@ void saveMsg(int roomNumber, struct Message Message) {
         if(rooms[roomNumber].messages[m].toSend != 1) {
             rooms[roomNumber].messages[m] = Message;
             rooms[roomNumber].messages[m].name = Message.name;
-            char* result = (char *) malloc(1 + strlen(Message.name)+ strlen(Message.text) );
+            char* result = (char *) malloc(2 + strlen(Message.name)+ strlen(Message.text) );
             sprintf(result, "%s: %s", Message.name, Message.text);
             strcpy(rooms[roomNumber].messages[m].text, result);
             rooms[roomNumber].messages[m].toSend = 2;
