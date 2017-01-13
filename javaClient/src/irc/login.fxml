@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="286.0" prefWidth="346.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="irc.LoginController">
+   <children>
+      <TextField fx:id="port" layoutX="80.0" layoutY="52.0" promptText="Port" text="3012" />
+      <TextField fx:id="address" layoutX="80.0" layoutY="96.0" promptText="IP address" text="192.168.43.20" />
+      <TextField fx:id="login" layoutX="80.0" layoutY="165.0" promptText="Login" />
+      <Button fx:id="button" layoutX="142.0" layoutY="241.0" mnemonicParsing="false" onAction="#login" onKeyPressed="#enter" text="Log In" />
+      <Label graphicTextGap="5.0" layoutX="142.0" layoutY="14.0" text="Welcome" />
+      <Label layoutX="109.0" layoutY="205.0" text="Login already taken" textFill="RED" visible="false" />
+      <Label layoutX="128.0" layoutY="136.0" text="Can't connect" textFill="RED" visible="false" />
+   </children>
+</AnchorPane>
