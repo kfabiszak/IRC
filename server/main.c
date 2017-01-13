@@ -17,13 +17,12 @@ typedef unsigned char UInt8;
 typedef unsigned int UInt32;
 
 struct sockaddr_in sockAddr, clientSockAddr;
-const int QUEUE_SIZE = 10;
-const int USER_SIZE = 50; //TODO set user size
-const int ROOM_SIZE = 50;
-const int MESSAGE_SIZE = 500; // TODO set right malloc for user list
-const int USERS_IN_ROOM = 50;
-const int STRING_SIZE = 256;
-const int LOGIN_SIZE = 15;
+const int QUEUE_SIZE = 10;      // Kolejka multipleksera
+const int USER_SIZE = 20;       // Maksymalna liczba urzytkowników będących jednocześnie na serwerze
+const int ROOM_SIZE = 40;       // Maksymalna ilość pokoi
+const int MESSAGE_SIZE = 500;   // Maksymalna wielkość wysyłanej wiadomości
+const int USERS_IN_ROOM = 10;   // Maksymalna liczba urzytkowników w pokoju
+const int LOGIN_SIZE = 15;      // Maksymalna długość loginu urzytkownika
 
 struct Message {
     char*  name;
@@ -36,7 +35,7 @@ struct Message {
 };
 
 struct User {
-    char  ip[STRING_SIZE];
+    char  ip[32];
     char  login[LOGIN_SIZE];
     int   descriptor;
     int   isValid;
@@ -59,6 +58,9 @@ char* getUserRoomList(int roomNumber);
 void sendUserList(int desc, int room);
 void saveMsg(int roomNumber, struct Message *message);
 int checkUserInRoom(int descriptor, int roomNumber);
+int logoutUser(struct User *user);
+struct User *findUser(int descriptor);
+void sendUserListToAllRooms(int desc);
 
 void initSockAddr() {
     sockAddr.sin_family = PF_INET;
@@ -71,11 +73,9 @@ void initStruct() {
     int size = USER_SIZE;
     for(int r = 0; r < ROOM_SIZE; r++) {
         rooms[r].users = malloc(sizeof(struct User) * size);
-        if(r == 0)
-            size = USERS_IN_ROOM;
         rooms[r].isDirty = 0;
-        rooms[r].size = USERS_IN_ROOM;
-        for(int u = 0; u < rooms[r].size; u++) {
+        rooms[r].size = size;
+        for(int u = 0; u < size; u++) {
             rooms[r].users[u] = malloc(sizeof(struct User));
             rooms[r].users[u]->isValid = 0;
             rooms[r].users[u]->descriptor = -1;
@@ -84,6 +84,8 @@ void initStruct() {
             rooms[r].messages[m].text = malloc((MESSAGE_SIZE + 1) * sizeof(char));
             rooms[r].messages[m].toSend = 0;
         }
+        if(r == 0)
+            size = USERS_IN_ROOM;
     }
 }
 
@@ -125,7 +127,7 @@ int readMsg (int socket, char** result) {
         printf("Podtrzymanie z %d\n", socket);
     } else if (x == 0) {
         printf("Rozłączenie z %d\n", socket);
-        clearUser(socket, 0);
+        logoutUser(findUser(socket));
         close(socket);
         return 0;
     } else {
@@ -230,7 +232,7 @@ void saveMsg(int roomNumber, struct Message *message) {
 // * wysłanie wiadomości do wszystkich w danym pokoju z listą userów
 int addUserToRoom(struct User *user, int roomNumber) {
     if(roomNumber < ROOM_SIZE && user->isValid && !checkUserInRoom(user->descriptor, roomNumber))
-        for(int u = 0; u < USERS_IN_ROOM; u++) {
+        for(int u = 0; u < rooms[roomNumber].size; u++) {
             if(roomNumber == 0 && rooms[roomNumber].users[u]->isValid == 0) {
                 rooms[roomNumber].users[u]->descriptor = user->descriptor;
                 strcpy(rooms[roomNumber].users[u]->ip, user->ip);
@@ -241,15 +243,14 @@ int addUserToRoom(struct User *user, int roomNumber) {
                 return 1;
                 
             }
-            else if(rooms[roomNumber].users[u]->isValid == 0) { //#todo send answer on full room
+            else if(u < USERS_IN_ROOM && rooms[roomNumber].users[u]->isValid == 0) {
                 rooms[roomNumber].users[u] = user;
                 printf("#User %d join to room %d.\n", user->descriptor, roomNumber);
                 sendUserList(rooms[roomNumber].users[u]->descriptor, roomNumber);
                 return 1;
             }
-            
         }
-    else printf("#User %d cannot join to room %d.\n", user->descriptor, roomNumber);
+    printf("#User %d cannot join to room %d.\n", user->descriptor, roomNumber);
     return 0;
 }
 
@@ -260,12 +261,12 @@ void sendSuccess(int userDesc) {
 
 // Usunięcie informacji usera z servera
 int clearUser(int userDesc, int roomNumber) {
-    for(int u = 0; u < USERS_IN_ROOM; u++) {
+    for(int u = 0; u < rooms[roomNumber].size; u++) {
         if(rooms[roomNumber].users[u]->isValid == 1 && (rooms[roomNumber].users[u]->descriptor == userDesc)) {
+            rooms[roomNumber].users[u] = malloc(sizeof(struct User));
             rooms[roomNumber].users[u]->isValid = 0;
-            strcpy(rooms[roomNumber].users[u]->ip, "");
-            strcpy(rooms[roomNumber].users[u]->login, "");
-            rooms[roomNumber].users[u]->descriptor = NULL;
+            rooms[roomNumber].users[u]->descriptor = -1;
+            printf("CZYSZCZENIE %d", roomNumber);
             return 1;
         }
     }
@@ -278,13 +279,24 @@ int removeUserFromRoom(struct User *user, int roomNumber) { // TODO usuwa całeg
     return clearUser(user->descriptor, roomNumber);
 }
 
+// Wylogowanie usera
+int logoutUser(struct User *user) {
+    for(int r = ROOM_SIZE-1; r >= 0; r--) {
+        if(clearUser(user->descriptor, r)) {
+            sendUserList(user->descriptor, r);
+        }
+    }
+    printf("#User %d logout from server.\n", user->descriptor);
+    return 1;
+}
+
 // Zmiana loginu usera
 int changeUserLogin(struct User *user, char* newLogin) {
     unsigned long int loginSize = strlen(newLogin);
     if(loginSize > 0 && loginSize < LOGIN_SIZE) {
         printf("#User %d change login '%s' to '%s'.\n", user->descriptor, user->login, newLogin);
         strcpy(user->login, newLogin);
-        sendUserList(user->descriptor, 0);//todo send to all room
+        sendUserListToAllRooms(user->descriptor);
         return 1;
     } else
         printf("#User %d cannot change login '%s' to '%s'.\n", user->descriptor, user->login, newLogin);
@@ -293,8 +305,9 @@ int changeUserLogin(struct User *user, char* newLogin) {
 
 // Pobranie globalnej listy urzytknowników: #users#nick1#nick2...
 char* getUserList() {
-    char usersList[(USER_SIZE+1)*LOGIN_SIZE] = "#users#0#";
-    for(int u = 0; u < USER_SIZE; u++) {
+    char* usersList = malloc(((USER_SIZE+1)*LOGIN_SIZE) * sizeof(char));
+    strncpy(&usersList[0], "#users#0#", 9);
+    for(int u = 0; u < rooms[0].size; u++) {
         if(rooms[0].users[u]->isValid) {
             char* name = rooms[0].users[u]->login;
             char name2[LOGIN_SIZE+1];
@@ -302,6 +315,7 @@ char* getUserList() {
             strncpy(&usersList[strlen(usersList)], name2, strlen(name2));
         }
     }
+    strncpy(&usersList[strlen(usersList)], "\0", 1);
     return usersList;
 }
 
@@ -309,11 +323,12 @@ char* getUserList() {
 char* getUserRoomList(int roomNumber) {
     if (roomNumber == 0)
         return getUserList();
-    char usersList[(USER_SIZE+3)*LOGIN_SIZE] = "#users#";
+    char* usersList = malloc(((USER_SIZE+1)*LOGIN_SIZE) * sizeof(char));
+    strncpy(&usersList[0], "#users#", 7);
     char roomNumberToString[5];
     sprintf(roomNumberToString, "%d#", roomNumber);
     strncpy(&usersList[strlen(usersList)], roomNumberToString, strlen(roomNumberToString));
-    for(int u = 0; u < USER_SIZE; u++) {
+    for(int u = 0; u < rooms[roomNumber].size; u++) {
         if(rooms[roomNumber].users[u]->isValid) {
             char* name = rooms[roomNumber].users[u]->login;
             char name2[LOGIN_SIZE+1];
@@ -321,10 +336,11 @@ char* getUserRoomList(int roomNumber) {
             strncpy(&usersList[strlen(usersList)], name2, strlen(name2));
         }
     }
+    strncpy(&usersList[strlen(usersList)], "\0", 1);
     return usersList;
 }
 
-// Utworzenie wiadomości z listą urzytkowników
+// Wysłanie wiadomości z listą urzytkowników do danego pokoju
 void sendUserList(int desc, int roomNumber){
     struct Message message;
     message.name = "";
@@ -332,6 +348,14 @@ void sendUserList(int desc, int roomNumber){
     message.text = getUserRoomList(roomNumber);
     message.length = strlen(message.text);
     saveMsg(roomNumber, &message);
+}
+
+// Wysłanie wiadomości z listą urzytkowników do pokojów z danym urzytkownikiem
+void sendUserListToAllRooms(int desc){
+    for(int r = 0; r < ROOM_SIZE; r++) {
+        if(checkUserInRoom(desc, r))
+            sendUserList(desc, r);
+    }
 }
 
 // Znalezienie urzytkownika po deskryptorze
@@ -347,7 +371,7 @@ struct User *findUser(int descriptor) {
 
 // Sprawdzenie czy użytkownik o danym deskryptorze znajduje się w pokoju
 int checkUserInRoom(int descriptor, int roomNumber) {
-    for(int u = 0 ; u < USERS_IN_ROOM ; u++) {
+    for(int u = 0 ; u < rooms[roomNumber].size ; u++) {
         if(rooms[roomNumber].users[u]->descriptor == descriptor) {
             return 1;
         }
@@ -375,16 +399,20 @@ void runCmd(int userDesc, char *msg) {
         if(changeUserLogin(findUser(userDesc), message.arg))
             sendSuccess(message.desc);
     } else if(strcmp(message.cmd, "logout") == 0) {
-        
+        if(logoutUser(findUser(userDesc))) {
+            sendSuccess(message.desc);
+            close(message.desc);
+        }
     } else if(strcmp(message.cmd, "join") == 0) {
         if(addUserToRoom(findUser(userDesc), roomNumber))
             sendSuccess(message.desc);
         
     } else if(strcmp(message.cmd, "leave") == 0) {
-        if(removeUserFromRoom(findUser(userDesc), roomNumber)) {
-            sendSuccess(message.desc);
-            sendUserList(message.desc, roomNumber);
-        }
+        if(roomNumber > 0)
+            if(removeUserFromRoom(findUser(userDesc), roomNumber)) {
+                sendSuccess(message.desc);
+                sendUserList(message.desc, roomNumber);
+            }
     }
 }
 
@@ -490,7 +518,7 @@ int main(int argc, char* argv[]) {
         }
         
         //READ MSG FROM ALL VALID USERS
-        for (int u = 0; u < USERS_IN_ROOM; u++) {
+        for (int u = 0; u < USER_SIZE; u++) {
             user = *rooms[0].users[u];
             userDesc = user.descriptor;
             if(user.isValid == 1) {
