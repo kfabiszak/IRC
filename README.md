@@ -16,25 +16,39 @@ Wysyłanie tekstu:
 
 Logowanie:
 - <code>#login#nickname</code>
-- serwer zwraca <code>#success#</code>
+- serwer zwraca status wykonania
 
 Wylogowanie:
 - <code>#logout</code>
 
-Dołączanie do pokoju:
+Dołączenie do pokoju:
 - <code>#join#room_number</code>
-- serwer zwraca <code>#success#</code>
+- serwer zwraca status wykonania
 
 Opuszczenie pokoju:
 - <code>#leave#room_number</code>
+- serwer zwraca status wykonania
 
 
 <h3>Odpowiedź serwera:</h3>
 
-Poprawnie przetworzenie prośby:
-- <code>#success#</code>
+Połączenie z serwerem:
+- OK    <code>#success#connect</code>
+- ERROR <code>#error#connect</code>
 
-Lista użytkowników wysyłana przy każdej zmianie stanu liczby użytkowników:
+Dołączenie do pokoju:
+- OK    <code>#success#join#room_number</code>
+- ERROR <code>#error#join#room_number</code>
+
+Opuszczenie pokoju:
+- OK    <code>#success#leave#room_number</code>
+- ERROR <code>#error#join#room_number</code>
+
+Logowanie:
+- OK    <code>#success#login#nickname</code>
+- ERROR <code>#error#join#room_number</code>
+
+Lista użytkowników (wysyłana przy każdej zmianie stanu liczby użytkowników):
 - <code>#users#room_number#nick1#nick2#...</code>
 
 ---
