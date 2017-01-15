@@ -42,11 +42,11 @@ Dołączenie do pokoju:
 
 Opuszczenie pokoju:
 - OK    <code>#success#leave#room_number</code>
-- ERROR <code>#error#join#room_number</code>
+- ERROR <code>#error#leave#room_number</code>
 
 Logowanie:
 - OK    <code>#success#login#nickname</code>
-- ERROR <code>#error#join#room_number</code>
+- ERROR <code>#error#login#nickname</code>
 
 Lista użytkowników (wysyłana przy każdej zmianie stanu liczby użytkowników):
 - <code>#users#room_number#nick1#nick2#...</code>
