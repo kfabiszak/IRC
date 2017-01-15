@@ -9,6 +9,9 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <signal.h>
+
+static volatile int keepRunning = 1;
 
 typedef char Int8;
 typedef int Int32;
@@ -18,10 +21,10 @@ typedef unsigned int UInt32;
 
 struct sockaddr_in sockAddr, clientSockAddr;
 const int QUEUE_SIZE = 10;      // Kolejka multipleksera
-const int USER_SIZE = 20;       // Maksymalna liczba urzytkowników będących jednocześnie na serwerze
+const int USER_SIZE = 2;       // Maksymalna liczba urzytkowników będących jednocześnie na serwerze
 const int ROOM_SIZE = 40;       // Maksymalna ilość pokoi
 const int MESSAGE_SIZE = 500;   // Maksymalna wielkość wysyłanej wiadomości
-const int USERS_IN_ROOM = 10;   // Maksymalna liczba urzytkowników w pokoju
+const int USERS_IN_ROOM = 2;   // Maksymalna liczba urzytkowników w pokoju
 const int LOGIN_SIZE = 15;      // Maksymalna długość loginu urzytkownika
 
 struct Message {
@@ -68,6 +71,10 @@ void initSockAddr() {
     sockAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 }
 
+void intHandler(int dummy) {
+    keepRunning = 0;
+}
+
 // Inicjalizacja podstawowych struktur serwera
 void initStruct() {
     int size = USER_SIZE;
@@ -91,10 +98,10 @@ void initStruct() {
 
 void readHeader(int socket, unsigned int x, void* length) {
     int result;
-    result = read(socket, length, x);
+    result = (int)read(socket, length, x);
     if (result < 1 )
     {
-        printf("ERROR #2");
+        printf("ERROR #2 Read header");
     }
 }
 
@@ -103,10 +110,10 @@ void readXBytes(int socket, unsigned int x, void* buffer) {
     int result;
     while (bytesRead < x)
     {
-        result = read(socket, buffer + bytesRead, x - bytesRead);
+        result = (int)read(socket, buffer + bytesRead, x - bytesRead);
         if (result < 1 )
         {
-            printf("ERROR #1");
+            printf("ERROR #1 Read x bytes");
             break;
         }
         bytesRead += result;
@@ -124,23 +131,23 @@ int readMsg (int socket, char** result) {
     char c;
     ssize_t x = recv(socket, &c, 1, MSG_PEEK);
     if (x > 0) {
-        printf("Podtrzymanie z %d\n", socket);
+        // Połączenie jest poprawne.
     } else if (x == 0) {
-        printf("Rozłączenie z %d\n", socket);
+        // Wylogowanie przez urzytkownika
+        printf("Logout from: %d\n", socket);
         logoutUser(findUser(socket));
-        close(socket);
         return 0;
     } else {
-        printf("Error z %d\n", socket);
+        // Nieoczekiwane rozłączenie z urzytkownikiem
+        printf("Unexpected logout from: %d\n", socket);
+        logoutUser(findUser(socket));
         return 0;
     }
     
     UInt32 length = 0;
     readHeader(socket, sizeof(length), (void*)(&length));
     length = ntohl(length); // comment with java client !
-    printf("HEADER2: %u\n", length);
     if(length > 0 && length <= 256) {
-        printf("HEADER!: %u\n", length);
         *result = malloc((length)*sizeof(char));
         readXBytes(socket, length, (void*)*result);
         return 1;
@@ -153,10 +160,10 @@ int sendHeader(int socket, unsigned int x) {
     char *data = (char*)&conv;
     int size = sizeof(conv);
     int result;
-    printf("SENDING TO %d size:%d bytes:%d\n", socket, x, size);
-    result = write(socket, data, size);
+    printf(">>User %d: Sent message: size=%d bytes=%d\n", socket, x, size);
+    result = (int)write(socket, data, size);
     if (result < 0) {
-        printf("Problem with send #1\n");
+        printf("Error #3 Send header\n");
         if ((errno == EAGAIN) || (errno == EWOULDBLOCK)) {
             // use select() or epoll() to wait for the socket to be writable again
         }
@@ -191,10 +198,10 @@ void decodeMSG(struct Message *Message) {
     for (int p = 0; header != NULL; p++) {
         if (p == 0)
             Message->cmd = header;
-        else if (p == 1)
+        else if (p == 1) {
             Message->arg = header;
-        else if (p == 2) {
-            Message->text += (3 + strlen(Message->cmd) + strlen(Message->arg));
+        } else if (p == 2) {
+            Message->text += (3 + strlen(Message->cmd) + strlen(Message->arg)); //todo message length > 0
             break;
         }
         header = strtok (NULL, "#");
@@ -203,24 +210,24 @@ void decodeMSG(struct Message *Message) {
 
 // Zapisanie wiadomości do późniejszego wysłania
 void saveMsg(int roomNumber, struct Message *message) {
-   
     for(int m = 0; m < MESSAGE_SIZE; m++) {
         if(rooms[roomNumber].messages[m].toSend != 1) {
+            memset(rooms[roomNumber].messages[m].text,0,strlen(rooms[roomNumber].messages[m].text));
             rooms[roomNumber].messages[m].name = message->name;
             rooms[roomNumber].messages[m].length = message->length;
             if(strlen(message->name) > 0) {
                 //Message from client
-                char* result = (char *) malloc(10 + strlen(message->name)+ strlen(message->text) );
-                sprintf(result, "#send#%d#%s#%s\0", roomNumber, message->name, message->text);
+                char* result = (char *) malloc(8 + strlen(message->name)+ strlen(message->text) );
+                sprintf(result, "#send#%d#%s#%s", roomNumber, message->name, message->text);
                 strcpy(rooms[roomNumber].messages[m].text, result);
-                rooms[roomNumber].messages[m].length += 10;
+                rooms[roomNumber].messages[m].length = (UInt32)strlen(result);
             } else {
                 //Message from server
                 strcpy(rooms[roomNumber].messages[m].text, message->text);
             }
             rooms[roomNumber].messages[m].toSend = 2;
             rooms[roomNumber].isDirty = 1;
-            printf("#Saved message i:%d text:'%s'.\n", m, rooms[roomNumber].messages[m].text);
+            printf("||Room %d: Saved message: '%s'\n", roomNumber, rooms[roomNumber].messages[m].text);
             break;
         }
     }
@@ -238,25 +245,67 @@ int addUserToRoom(struct User *user, int roomNumber) {
                 strcpy(rooms[roomNumber].users[u]->ip, user->ip);
                 strcpy(rooms[roomNumber].users[u]->login, user->login);
                 rooms[roomNumber].users[u]->isValid = 1;
-                printf("#New User %d join to room %d.\n", rooms[roomNumber].users[u]->descriptor, roomNumber);
+                printf("##User %d: join to room %d.\n", rooms[roomNumber].users[u]->descriptor, roomNumber);
                 sendUserList(rooms[roomNumber].users[u]->descriptor, roomNumber);
                 return 1;
                 
             }
             else if(u < USERS_IN_ROOM && rooms[roomNumber].users[u]->isValid == 0) {
                 rooms[roomNumber].users[u] = user;
-                printf("#User %d join to room %d.\n", user->descriptor, roomNumber);
+                printf("##User %d: join to room %d.\n", user->descriptor, roomNumber);
                 sendUserList(rooms[roomNumber].users[u]->descriptor, roomNumber);
                 return 1;
             }
         }
-    printf("#User %d cannot join to room %d.\n", user->descriptor, roomNumber);
+    printf("##User %d: cannot join to room %d.\n", user->descriptor, roomNumber);
     return 0;
 }
 
-// Wysłanie wiadomości potwierdzającej wykonanie akcji;
-void sendSuccess(int userDesc) {
-    sendMsg(userDesc, "#succes#", 8);
+// Wysłanie odpowiedzi serwera do urzytkownika o poprawności wykonania akcji:
+// * state
+//  * 1) success
+//  * 2) error
+void sendResponse(char* msg, int userDesc) {
+    printf(">>User %d: Sent response: '%s'\n", userDesc, msg);
+    sendMsg(userDesc, msg, (UInt32)strlen(msg));
+}
+void sendResponseJoin(int state, int userDesc, int roomNumber) {
+    char* head;
+    if(state)
+        head = "#success#join#";
+    else
+        head = "#error#join#";
+    char* result = malloc((strlen(head)+2) * sizeof(char)); //todo size of room number
+    sprintf(result, "%s%d", head, roomNumber);
+    sendResponse(result, userDesc);
+}
+void sendResponseLeave(int state, int userDesc, int roomNumber) {
+    char* head;
+    if(state)
+        head = "#success#leave#";
+    else
+        head = "#error#leave#";
+    char* result = malloc((strlen(head)+2) * sizeof(char)); //todo size of room number
+    sprintf(result, "%s%d", head, roomNumber);
+    sendResponse(result, userDesc);
+}
+void sendResponseLogin(int state, struct User *user) {
+    char* head;
+    if(state)
+        head = "#success#login#";
+    else
+        head = "#error#login#";
+    char* result = malloc(((strlen(head))+strlen(user->login)) * sizeof(char));
+    sprintf(result, "%s%s", head, user->login);
+    sendResponse(result, user->descriptor);
+}
+void sendResponseConnect(int state, int userDesc) {
+    char* result;
+    if(state)
+        result = "#success#connect#";
+    else
+        result = "#error#connect#";
+    sendResponse(result, userDesc);
 }
 
 // Usunięcie informacji usera z servera
@@ -266,7 +315,6 @@ int clearUser(int userDesc, int roomNumber) {
             rooms[roomNumber].users[u] = malloc(sizeof(struct User));
             rooms[roomNumber].users[u]->isValid = 0;
             rooms[roomNumber].users[u]->descriptor = -1;
-            printf("CZYSZCZENIE %d", roomNumber);
             return 1;
         }
     }
@@ -274,9 +322,12 @@ int clearUser(int userDesc, int roomNumber) {
 }
 
 // Usunięcie usera z pokoju
-int removeUserFromRoom(struct User *user, int roomNumber) { // TODO usuwa całego usera zamiast tylko z pokoju
-    printf("#User %d leave from room %d.\n", user->descriptor, roomNumber);
-    return clearUser(user->descriptor, roomNumber);
+int removeUserFromRoom(struct User *user, int roomNumber) {
+    if(roomNumber > 0) {
+        printf("##User %d leave from room %d.\n", user->descriptor, roomNumber);
+        return clearUser(user->descriptor, roomNumber);
+    } else
+        return 0;
 }
 
 // Wylogowanie usera
@@ -286,7 +337,8 @@ int logoutUser(struct User *user) {
             sendUserList(user->descriptor, r);
         }
     }
-    printf("#User %d logout from server.\n", user->descriptor);
+    close(user->descriptor);
+    printf("##User %d logout from server.\n", user->descriptor);
     return 1;
 }
 
@@ -294,18 +346,18 @@ int logoutUser(struct User *user) {
 int changeUserLogin(struct User *user, char* newLogin) {
     unsigned long int loginSize = strlen(newLogin);
     if(loginSize > 0 && loginSize < LOGIN_SIZE) {
-        printf("#User %d change login '%s' to '%s'.\n", user->descriptor, user->login, newLogin);
+        printf("##User %d change login '%s' to '%s'\n", user->descriptor, user->login, newLogin);
         strcpy(user->login, newLogin);
         sendUserListToAllRooms(user->descriptor);
         return 1;
     } else
-        printf("#User %d cannot change login '%s' to '%s'.\n", user->descriptor, user->login, newLogin);
+        printf("##User %d cannot change login '%s' to '%s'\n", user->descriptor, user->login, newLogin);
     return 0;
 }
 
 // Pobranie globalnej listy urzytknowników: #users#nick1#nick2...
 char* getUserList() {
-    char* usersList = malloc(((USER_SIZE+1)*LOGIN_SIZE) * sizeof(char));
+    char* usersList = malloc(((USER_SIZE+1)*LOGIN_SIZE) * sizeof(char)); //todo room count size to string
     strncpy(&usersList[0], "#users#0#", 9);
     for(int u = 0; u < rooms[0].size; u++) {
         if(rooms[0].users[u]->isValid) {
@@ -346,7 +398,7 @@ void sendUserList(int desc, int roomNumber){
     message.name = "";
     message.desc = desc;
     message.text = getUserRoomList(roomNumber);
-    message.length = strlen(message.text);
+    message.length = (UInt32)strlen(message.text);
     saveMsg(roomNumber, &message);
 }
 
@@ -365,8 +417,7 @@ struct User *findUser(int descriptor) {
             return rooms[0].users[u];
         }
     }
-    struct User empty;
-    return &empty;
+    return NULL;
 }
 
 // Sprawdzenie czy użytkownik o danym deskryptorze znajduje się w pokoju
@@ -383,8 +434,12 @@ int checkUserInRoom(int descriptor, int roomNumber) {
 // Wykonanie odpowiedniego zadania przekazanego przez wiadomość
 void runCmd(int userDesc, char *msg) {
     struct Message message;
+    message.cmd = "";
+    message.arg = "";
+    message.text = "";
+    
     message.text = msg;
-    message.length = strlen(msg);
+    message.length = (UInt32)strlen(msg);
     message.desc = userDesc;
     message.name = findUser(userDesc)->login;
     
@@ -393,26 +448,22 @@ void runCmd(int userDesc, char *msg) {
     int roomNumber = atoi(message.arg);
     
     if(strcmp(message.cmd, "send") == 0) {
-        if(checkUserInRoom(userDesc, roomNumber)) // todo ?
+        if(checkUserInRoom(userDesc, roomNumber))
             saveMsg(roomNumber, &message);
     } else if(strcmp(message.cmd, "login") == 0) {
-        if(changeUserLogin(findUser(userDesc), message.arg))
-            sendSuccess(message.desc);
+        struct User *user = findUser(userDesc);
+        int state = changeUserLogin(user, message.arg);
+        sendResponseLogin(state, user);
     } else if(strcmp(message.cmd, "logout") == 0) {
-        if(logoutUser(findUser(userDesc))) {
-            sendSuccess(message.desc);
-            close(message.desc);
-        }
+        logoutUser(findUser(userDesc));
     } else if(strcmp(message.cmd, "join") == 0) {
-        if(addUserToRoom(findUser(userDesc), roomNumber))
-            sendSuccess(message.desc);
-        
+        int state = addUserToRoom(findUser(userDesc), roomNumber);
+        sendResponseJoin(state, userDesc, roomNumber);
     } else if(strcmp(message.cmd, "leave") == 0) {
-        if(roomNumber > 0)
-            if(removeUserFromRoom(findUser(userDesc), roomNumber)) {
-                sendSuccess(message.desc);
-                sendUserList(message.desc, roomNumber);
-            }
+        int state = removeUserFromRoom(findUser(userDesc), roomNumber);
+        sendResponseLeave(state, userDesc, roomNumber);
+        if (state)
+            sendUserList(userDesc, roomNumber);
     }
 }
 
@@ -423,7 +474,9 @@ int main(int argc, char* argv[]) {
     
     initSockAddr();
     initStruct();
-    int tmpSizeOfFileDescriptor;
+    signal(SIGINT, intHandler);
+    
+    unsigned int tmpSizeOfFileDescriptor;
     
     int clientSocketFileDescriptor;
     int serverSocketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0);
@@ -465,7 +518,7 @@ int main(int argc, char* argv[]) {
     printf("#SERVER RUNNING#\n");
     
     //main loop
-    while(1) {
+    while(keepRunning) {
         //copy the write set
         fsWmask = fsMask;
         
@@ -500,6 +553,7 @@ int main(int argc, char* argv[]) {
             fflush(stdout);
         }
         
+        
         if (FD_ISSET(serverSocketFileDescriptor, &fsRmask)) {
             clientSocketFileDescriptor = accept(serverSocketFileDescriptor, (struct sockaddr*)&clientSockAddr, &tmpSizeOfFileDescriptor);
             if (clientSocketFileDescriptor < 0) {
@@ -514,7 +568,11 @@ int main(int argc, char* argv[]) {
             strcpy( User.ip, inet_ntoa((struct in_addr)clientSockAddr.sin_addr));
             strcpy( User.login, "noname");
             
-            addUserToRoom(&User, 0);
+            int state = addUserToRoom(&User, 0);
+            sendResponseConnect(state, User.descriptor);
+            if(!state) {
+                logoutUser(findUser(User.descriptor));
+            }
         }
         
         //READ MSG FROM ALL VALID USERS
@@ -525,7 +583,7 @@ int main(int argc, char* argv[]) {
                 if (FD_ISSET(userDesc, &fsRmask)) {
                     char* readBuffer;
                     if(readMsg(userDesc, &readBuffer)) {
-                        printf("client_%d: %s\n", userDesc, readBuffer);
+                        printf("<<User %d: Received: '%s'\n", userDesc, readBuffer);
                         runCmd(userDesc, readBuffer);
                     }
                 }
@@ -571,6 +629,5 @@ int main(int argc, char* argv[]) {
     }
     
     close(serverSocketFileDescriptor);
-    
     return 0;
 }
