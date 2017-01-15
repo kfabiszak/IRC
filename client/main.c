@@ -19,7 +19,7 @@ typedef unsigned int UInt32;
 void readHeader(int socket, unsigned int x, void* length) {
     int result;
     result = read(socket, length,  x);
-    printf("read: %d\n", length);
+//    printf("read: %d\n", length);
     if (result < 1 )
     {
         printf("ERROR #2");
@@ -79,7 +79,7 @@ void sendMsg (int socket, char* message, UInt32 length) {
 
 int main(int argc, char *argv[]) {
     char* hostIp = "0.0.0.0";
-    char* hostPort = "3011";
+    char* hostPort = "3012";
     struct hostent* host;
     host = gethostbyname(hostIp);
     int fd = socket(PF_INET, SOCK_STREAM, 0);
