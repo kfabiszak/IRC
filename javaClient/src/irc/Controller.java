@@ -27,12 +27,6 @@ public class Controller {
     private boolean notInRoom = false;
 
     @FXML
-    private Button relogin;
-    @FXML
-    private Button join;
-    @FXML
-    private Button leave;
-    @FXML
     private TextArea typing;
     @FXML
     private TextFlow chat;
@@ -193,7 +187,6 @@ public class Controller {
             Main.getRooms()[Integer.parseInt(arg)].setUsers(usersList);
             setRoom();
         } else if (cmd.equals("send")) {
-            final String message = "Room" + arg + ": " + nick + ": " + msg + "\n";
             Main.getRooms()[Integer.parseInt(arg)].addMessage(msg, nick);
             show(Integer.parseInt(arg));
         } else if (cmd.equals("success")) {
@@ -249,6 +242,7 @@ public class Controller {
                     }
                     for (Message object: Main.getRooms()[roomNum].getMessages()) {
                         Text name = new Text (object.getNick() + ": ");
+                        name.setFont(Font.font("Verdana", FontWeight.BOLD, 13)); //TODO czy tak pogrubiać czy nie
                         if (!object.getNick().equals(Main.getLogin())) {
                             if (object.getNick().equals("system")) {
                                 name.setFill(Color.RED);
