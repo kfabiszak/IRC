@@ -1,4 +1,4 @@
-<h1>Komunikator IRC</h1>
+<h1>Komunikator internetowy typu IRC</h1>
 
 ---
 
