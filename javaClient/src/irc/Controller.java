@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
@@ -21,22 +20,26 @@ import java.util.Arrays;
 
 public class Controller {
 
-    private ObservableList<String> rooms;
-
     private Process p;
     private boolean notInRoom = false;
 
+    //Pole do wpisywania wiadomości
     @FXML
     private TextArea typing;
+    //Pole do wyświetlania chatu
     @FXML
     private TextFlow chat;
+    //Przewijanie chatu
     @FXML
     private ScrollPane scroll;
+    //Lista pokoi
     @FXML
     private ListView<String> roomList;
+    //Lista użytkowników
     @FXML
     private ListView<String> userList;
 
+    //Kończenie procesu głównego okna
     public void destroy() {
         if (p != null) {
             p.destroy();
@@ -44,7 +47,7 @@ public class Controller {
         System.out.println("Main controller destroyed.");
     }
 
-
+    //Wylogowanie z aktualnego chatu i wyświetlenie okna logowania
     @FXML
     private void relogin() throws IOException{
         Main.disconnect();
@@ -53,6 +56,7 @@ public class Controller {
         Main.showLoginView();
     }
 
+    //Funkcja wywoływana na enter w polu do wpisywania wiadomości - wysłanie wiadomości
     @FXML
     public void enter(KeyEvent e){
         if(e.getCode().equals(KeyCode.ENTER)){
@@ -75,12 +79,14 @@ public class Controller {
         }
     }
 
+    //Funkcja wywoływana na przycisk "Relogin" - wylogowanie
     @FXML
     public void enterButton(KeyEvent e) throws IOException{
         if(e.getCode().equals(KeyCode.ENTER))
             relogin();
     }
 
+    //Odczyt wiadomości z serwera w nowym wątku
     public void readChat() {
         try {
             p = new ProcessBuilder("ping", "stackoverflow.com", "-n", "100").start();
@@ -112,6 +118,7 @@ public class Controller {
         }
     }
 
+    //Dekodowanie wiadomości (podział na komendę i argumenty
     public void decode(String text){
         String[] words = text.split("#");
         String cmd = "", arg = "", nick ="", msg = "";
@@ -230,11 +237,12 @@ public class Controller {
         }
     }
 
+    //Wyświetlanie wiadomości w oknie chatu
     @FXML
     public void show(final int roomNum) {
         if (roomNum == Main.getRoom()) {
             Platform.runLater(new Runnable() {
-                public void run() { //TODO POGRUBIC ITP wyswietlac kto skad
+                public void run() {
                     chat.getChildren().clear();
                     if (notInRoom) {
                         showError("You didn't join room " + roomNum + " yet.");
@@ -242,7 +250,7 @@ public class Controller {
                     }
                     for (Message object: Main.getRooms()[roomNum].getMessages()) {
                         Text name = new Text (object.getNick() + ": ");
-                        name.setFont(Font.font("Verdana", FontWeight.BOLD, 13)); //TODO czy tak pogrubiać czy nie
+                        name.setFont(Font.font("Verdana", FontWeight.BOLD, 13));
                         if (!object.getNick().equals(Main.getLogin())) {
                             if (object.getNick().equals("system")) {
                                 name.setFill(Color.RED);
@@ -262,6 +270,7 @@ public class Controller {
         }
     }
 
+    //Wyświetlanie komunikatu o błędzie w oknie chatu
     @FXML
     public void showError(String text) {
         Text t = new Text(text + "\n");
@@ -275,6 +284,7 @@ public class Controller {
         });
     }
 
+    //Zmiana pokoju po wybraniu z listy pokoi
     @FXML
     public void setRoom(){
         Main.setRoom(roomList.getSelectionModel().getSelectedIndex());
@@ -302,6 +312,7 @@ public class Controller {
         }
     }
 
+    //Obsługa przycisku "Join" - dołączenie do wybranego pokoju
     @FXML
     public void joinRoom() {
         final int roomNum = roomList.getSelectionModel().getSelectedIndex();
@@ -321,6 +332,7 @@ public class Controller {
         }
     }
 
+    //Obsługa przycisku "Leave" - opuszczenie wybranego pokoju
     @FXML
     public void leaveRoom() {
         final int roomNum = roomList.getSelectionModel().getSelectedIndex();
@@ -341,12 +353,13 @@ public class Controller {
         }
     }
 
+    //Inicjalizacja głównego okna aplikacji
     @FXML
     public void initialize() {
         if (!Main.isConnected())
             Main.raiseCantConnect();
         System.out.println("Initializing mainController.");
-        rooms = FXCollections.observableArrayList(Main.getRoomList());
+        ObservableList<String> rooms = FXCollections.observableArrayList(Main.getRoomList());
         roomList.setItems(rooms);
         roomList.getSelectionModel().selectFirst();
         typing.requestFocus();

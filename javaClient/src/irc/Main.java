@@ -53,6 +53,10 @@ public class Main extends Application {
         return rooms;
     }
 
+    public static String[] getRoomList() {
+        return roomList;
+    }
+
     public static void setRoom(int room) {
         Main.room = room;
     }
@@ -85,12 +89,14 @@ public class Main extends Application {
         Main.logged = logged;
     }
 
+    //Usuwanie znaków specjalnych
     public static String deAccent(String str) {
         String nfdNormalizedString = Normalizer.normalize(str, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         return pattern.matcher(nfdNormalizedString).replaceAll("").replaceAll("ł","l").replaceAll("Ł","L");
     }
 
+    //Wysyłanie tekstu przez Buffered Writer
     public static void sendString(BufferedWriter bw, String str) {
         try {
             bw.write(str);
@@ -100,6 +106,7 @@ public class Main extends Application {
         }
     }
 
+    //Wysyłanie headera + tekstu
     public static void send(String text) throws IOException{
         text = deAccent(text.trim());
         int len = text.length();
@@ -108,6 +115,7 @@ public class Main extends Application {
         System.out.println("Sent(" + len + "): " + text);
     }
 
+    //Wysyłanie zakodowanej wiadomości
     public static void sendMess(String text) throws IOException{
         if(rooms[room].isJoined()) {
             send("#send#" + getRoom() + "#" + text);
@@ -116,26 +124,28 @@ public class Main extends Application {
         }
     }
 
+    //Odczyt wiadomości
     public static String read(int header) throws IOException{
         byte[] bytes = new byte[header];
         inFromServer.readFully(bytes);
-        String text = new String(bytes);
-        return text;
+        return new String(bytes);
     }
 
+    //Odczyt headera
     public static int readHeader() throws IOException{
         if (inFromServer != null) {
-            int header = inFromServer.readInt();
-            return header;
+            return inFromServer.readInt();
         } else {
             return 0;
         }
     }
 
+    //Logowanie
     public static void login() throws IOException{
         send("#login#" + login);
     }
 
+    //Inicjalizowanie pokoi
     public static void createRooms() {
         for (int i = 0; i < getRooms().length; i++){
             getRooms()[i] = new Room(i);
@@ -143,6 +153,7 @@ public class Main extends Application {
         }
     }
 
+    //Opuszczanie pokoju
     public static void leaveRoom(int number) throws IOException{
         if(number != 0){
             if (getRooms()[number].isJoined()) {
@@ -158,6 +169,7 @@ public class Main extends Application {
         }
     }
 
+    //Dołączanie do pokoju
     public static void joinRoom(int number) throws IOException{
         if (!getRooms()[number].isJoined()){
             getRooms()[number].setJoined(true);
@@ -168,6 +180,7 @@ public class Main extends Application {
         }
     }
 
+    //Inicjalizacja klienta (łączenie + ładowanie głównego okna aplikacji)
     public static void initialize() throws IOException {
         if (server != null) {
             if (port != 0) {
@@ -188,6 +201,7 @@ public class Main extends Application {
         }
     }
 
+    //Wyświetlanie głównego okna aplikacji
     public static void showChat() throws IOException {
         if (isConnected()) {
             if (isLogged()) {
@@ -203,6 +217,7 @@ public class Main extends Application {
         }
     }
 
+    //Ładowanie i wyświetlanie okna logowania
     public static void showLoginView() throws IOException{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("login.fxml"));
@@ -213,6 +228,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    //Łączenie z serwerem
     public static void connect(){
         try {
             socket = new Socket(server, port);
@@ -237,6 +253,7 @@ public class Main extends Application {
         }
     }
 
+    //Rozłączanie z serwerem
     public static void disconnect(){
         try{
             send("#logout");
@@ -260,16 +277,14 @@ public class Main extends Application {
         }
     }
 
+    //Wyświetlanie błędu - login zajęty
     public static void raiseLoginTaken() {
         loginController.loginErrorTaken.setVisible(true);
     }
 
+    //Wyświetlanie błędu połączenia z serwerem
     public static void raiseCantConnect(){
         loginController.connectError.setVisible(true);
-    }
-
-    public static String[] getRoomList() {
-        return roomList;
     }
 
     @Override

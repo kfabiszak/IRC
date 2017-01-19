@@ -6,8 +6,12 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/JavaFXApp.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/JavaFXApp.xml" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added polish comments describing how things work.">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/Controller.java" afterPath="$PROJECT_DIR$/src/irc/Controller.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/LoginController.java" afterPath="$PROJECT_DIR$/src/irc/LoginController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/Main.java" afterPath="$PROJECT_DIR$/src/irc/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/Message.java" afterPath="$PROJECT_DIR$/src/irc/Message.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/Room.java" afterPath="$PROJECT_DIR$/src/irc/Room.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -75,22 +79,22 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/irc/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1096" max-vertical-offset="4301">
-              <caret line="248" column="33" selection-start-line="248" selection-start-column="33" selection-end-line="248" selection-end-column="33" />
+            <state vertical-scroll-proportion="-5.9117646" vertical-offset="1839" max-vertical-offset="2992">
+              <caret line="195" column="20" selection-start-line="195" selection-start-column="20" selection-end-line="195" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#deAccent#0;class#Main#0" expanded="false" />
                 <element signature="method#sendString#0;class#Main#0" expanded="false" />
+                <element signature="method#send#0;class#Main#0" expanded="false" />
                 <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-                <element signature="method#read#0;class#Main#0" expanded="false" />
                 <element signature="method#login#0;class#Main#0" expanded="false" />
                 <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-                <element signature="e#8733#8734#0" expanded="true" />
-                <element signature="e#8797#8798#0" expanded="true" />
-                <element signature="e#8841#8842#0" expanded="true" />
-                <element signature="e#8902#8903#0" expanded="true" />
-                <element signature="e#8946#8947#0" expanded="true" />
-                <element signature="e#8977#8978#0" expanded="true" />
+                <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+                <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+                <element signature="method#showChat#0;class#Main#0" expanded="false" />
+                <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+                <element signature="method#connect#0;class#Main#0" expanded="false" />
+                <element signature="method#disconnect#0;class#Main#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -99,10 +103,20 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/irc/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5616592" vertical-offset="4956" max-vertical-offset="5848">
-              <caret line="344" column="30" selection-start-line="344" selection-start-column="30" selection-end-line="344" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.33212996" vertical-offset="1737" max-vertical-offset="3757">
+              <caret line="174" column="16" selection-start-line="174" selection-start-column="16" selection-end-line="174" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+                <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+                <element signature="method#enter#0;class#Controller#0" expanded="false" />
+                <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+                <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+                <element signature="method#show#0;class#Controller#0" expanded="false" />
+                <element signature="method#showError#0;class#Controller#0" expanded="false" />
+                <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+                <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+                <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -111,11 +125,38 @@
       <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/irc/LoginController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1367" max-vertical-offset="1921">
-              <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="264" max-vertical-offset="1156">
+              <caret line="75" column="42" selection-start-line="75" selection-start-column="42" selection-end-line="75" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#login#0;class#LoginController#0" expanded="false" />
                 <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+                <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+                <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Room.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/irc/Room.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
+              <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/irc/Message.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding>
+                <element signature="method#Message#0;class#Message#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -124,7 +165,7 @@
       <file leaf-file-name="login.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/irc/login.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="476">
+            <state vertical-scroll-proportion="-5.8285713" vertical-offset="0" max-vertical-offset="476">
               <caret line="12" column="128" selection-start-line="12" selection-start-column="128" selection-end-line="12" selection-end-column="128" />
               <folding />
             </state>
@@ -137,39 +178,13 @@
       <file leaf-file-name="IRC.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/irc/IRC.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1292">
+            <state vertical-scroll-proportion="-0.0" vertical-offset="272" max-vertical-offset="1292">
               <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
               <folding />
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder">
             <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Room.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/irc/Room.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="714">
-              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#368#369#0" expanded="true" />
-                <element signature="e#397#398#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Message.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/irc/Message.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="391">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding>
-                <element signature="method#Message#0;class#Message#0" expanded="false" />
-              </folding>
-            </state>
           </provider>
         </entry>
       </file>
@@ -193,12 +208,12 @@
         <option value="$PROJECT_DIR$/src/irc/Thread.java" />
         <option value="$PROJECT_DIR$/src/irc/Sender.java" />
         <option value="$PROJECT_DIR$/src/irc/IRC.fxml" />
-        <option value="$PROJECT_DIR$/src/irc/Message.java" />
-        <option value="$PROJECT_DIR$/src/irc/LoginController.java" />
         <option value="$PROJECT_DIR$/src/irc/login.fxml" />
+        <option value="$PROJECT_DIR$/src/irc/Controller.java" />
+        <option value="$PROJECT_DIR$/src/irc/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/irc/Message.java" />
         <option value="$PROJECT_DIR$/src/irc/Room.java" />
         <option value="$PROJECT_DIR$/src/irc/Main.java" />
-        <option value="$PROJECT_DIR$/src/irc/Controller.java" />
       </list>
     </option>
   </component>
@@ -661,7 +676,7 @@
       <workItem from="1484406947927" duration="51191000" />
       <workItem from="1484695211694" duration="27000" />
       <workItem from="1484695250654" duration="516000" />
-      <workItem from="1484855205412" duration="1179000" />
+      <workItem from="1484855205412" duration="3221000" />
     </task>
     <task id="LOCAL-00001" summary="Bold user names.">
       <created>1484695563591</created>
@@ -669,20 +684,26 @@
       <option name="project" value="LOCAL" />
       <updated>1484695563591</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added .jar">
+      <created>1484856435018</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1484856435018</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113298000" />
+    <option name="totallyTimeSpent" value="115340000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32864866" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -693,7 +714,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.123958334" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.123958334" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -759,11 +780,21 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="Bold user names." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bold user names." />
+    <MESSAGE value="Added .jar" />
+    <MESSAGE value="Added polish comments describing how things work." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added polish comments describing how things work." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="12" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/irc/Main.java</url>
+          <line>184</line>
+          <properties />
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="17" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -778,7 +809,10 @@
           <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#LoginController#0" expanded="false" />
             <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+            <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+            <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -811,8 +845,6 @@
           <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#368#369#0" expanded="true" />
-            <element signature="e#397#398#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -835,16 +867,16 @@
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -855,6 +887,16 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -865,7 +907,10 @@
           <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#LoginController#0" expanded="false" />
             <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+            <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+            <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -898,8 +943,6 @@
           <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#368#369#0" expanded="true" />
-            <element signature="e#397#398#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -922,16 +965,16 @@
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -942,7 +985,10 @@
           <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#LoginController#0" expanded="false" />
             <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+            <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+            <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -964,6 +1010,16 @@
           <caret line="107" column="27" selection-start-line="107" selection-start-column="27" selection-end-line="107" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -987,16 +1043,16 @@
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1007,7 +1063,10 @@
           <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#LoginController#0" expanded="false" />
             <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+            <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+            <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1029,6 +1088,16 @@
           <caret line="107" column="27" selection-start-line="107" selection-start-column="27" selection-end-line="107" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1052,16 +1121,16 @@
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1072,7 +1141,10 @@
           <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#LoginController#0" expanded="false" />
             <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+            <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+            <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1094,6 +1166,16 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1117,16 +1199,16 @@
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1137,7 +1219,10 @@
           <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#LoginController#0" expanded="false" />
             <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+            <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+            <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1159,6 +1244,16 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1182,16 +1277,16 @@
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1202,7 +1297,10 @@
           <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#LoginController#0" expanded="false" />
             <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+            <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+            <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1224,6 +1322,16 @@
           <caret line="50" column="58" selection-start-line="50" selection-start-column="58" selection-end-line="50" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1247,16 +1355,16 @@
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1267,6 +1375,16 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="2" selection-end-line="3" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1290,16 +1408,16 @@
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1310,6 +1428,16 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1328,6 +1456,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/irc/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="264" max-vertical-offset="1156">
+          <caret line="75" column="42" selection-start-line="75" selection-start-column="42" selection-end-line="75" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#LoginController#0" expanded="false" />
+            <element signature="method#enter#0;class#LoginController#0" expanded="false" />
+            <element signature="method#focus#0;class#LoginController#0" expanded="false" />
+            <element signature="method#initialize#0;class#LoginController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/irc/login.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.8285713" vertical-offset="0" max-vertical-offset="476">
+          <caret line="12" column="128" selection-start-line="12" selection-start-column="128" selection-end-line="12" selection-end-column="128" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/irc/IRC.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1292">
@@ -1341,76 +1494,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/irc/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="391">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
             <element signature="method#Message#0;class#Message#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/irc/login.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="476">
-          <caret line="12" column="128" selection-start-line="12" selection-start-column="128" selection-end-line="12" selection-end-column="128" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/irc/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1367" max-vertical-offset="1921">
-          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#enter#0;class#LoginController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/irc/Room.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="107" max-vertical-offset="714">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
+          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#368#369#0" expanded="true" />
-            <element signature="e#397#398#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/irc/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1096" max-vertical-offset="4301">
-          <caret line="248" column="33" selection-start-line="248" selection-start-column="33" selection-end-line="248" selection-end-column="33" />
+        <state vertical-scroll-proportion="-5.9117646" vertical-offset="1839" max-vertical-offset="2992">
+          <caret line="195" column="20" selection-start-line="195" selection-start-column="20" selection-end-line="195" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
             <element signature="method#sendString#0;class#Main#0" expanded="false" />
+            <element signature="method#send#0;class#Main#0" expanded="false" />
             <element signature="method#sendMess#0;class#Main#0" expanded="false" />
-            <element signature="method#read#0;class#Main#0" expanded="false" />
             <element signature="method#login#0;class#Main#0" expanded="false" />
             <element signature="method#createRooms#0;class#Main#0" expanded="false" />
-            <element signature="e#8733#8734#0" expanded="true" />
-            <element signature="e#8797#8798#0" expanded="true" />
-            <element signature="e#8841#8842#0" expanded="true" />
-            <element signature="e#8902#8903#0" expanded="true" />
-            <element signature="e#8946#8947#0" expanded="true" />
-            <element signature="e#8977#8978#0" expanded="true" />
+            <element signature="method#leaveRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Main#0" expanded="false" />
+            <element signature="method#showChat#0;class#Main#0" expanded="false" />
+            <element signature="method#showLoginView#0;class#Main#0" expanded="false" />
+            <element signature="method#connect#0;class#Main#0" expanded="false" />
+            <element signature="method#disconnect#0;class#Main#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/irc/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5616592" vertical-offset="4956" max-vertical-offset="5848">
-          <caret line="344" column="30" selection-start-line="344" selection-start-column="30" selection-end-line="344" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.33212996" vertical-offset="1737" max-vertical-offset="3757">
+          <caret line="174" column="16" selection-start-line="174" selection-start-column="16" selection-end-line="174" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#destroy#0;class#Controller#0" expanded="false" />
+            <element signature="method#relogin#0;class#Controller#0" expanded="false" />
+            <element signature="method#enter#0;class#Controller#0" expanded="false" />
+            <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
+            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
+            <element signature="method#show#0;class#Controller#0" expanded="false" />
+            <element signature="method#showError#0;class#Controller#0" expanded="false" />
+            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
+            <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -16,25 +16,35 @@ import java.io.IOException;
  */
 public class LoginController {
 
+    //Pole do pobierania loginu
     @FXML
     public TextField login;
+    //Pole do pobierania adresu IP serwera
     @FXML
     public TextField address;
+    //Pole do pobierania numeru portu
     @FXML
     public TextField port;
+    //Przycisk do logowania
     @FXML
     public Button button;
+    //Komunikat o błędzie - zbyt długi login
     @FXML
     public Label loginErrorLong;
+    //Komunikat o błędzie - pusty login
     @FXML
     public Label loginErrorEmpty;
+    //Komunikat o błędzie - zajęty login
     @FXML
     public Label loginErrorTaken;
+    //Komunikat o błędzie - zarezerwowany login
     @FXML
     public Label loginErrorSystem;
+    //Komunikat o błędzie łączenia z serwerem
     @FXML
     public Label connectError;
 
+    //Obsługa przycisku "Login" (łączenie i logowanie do serwera)
     @FXML
     private void login() throws IOException{
         Main.setServer(address.getText());
@@ -61,6 +71,7 @@ public class LoginController {
         }
     }
 
+    //Obsługa klawisza enter przy logowaniu
     @FXML
     public void enter(KeyEvent e) throws IOException{
         if(e.getCode().equals(KeyCode.ENTER)) {
@@ -68,6 +79,7 @@ public class LoginController {
         }
     }
 
+    //Chowanie komunikatów o błędach na "focus" na polu
     public void focus(){
         loginErrorEmpty.setVisible(false);
         loginErrorLong.setVisible(false);
@@ -76,6 +88,7 @@ public class LoginController {
         connectError.setVisible(false);
     }
 
+    //Inicjalizacja okna do logowania - obsługa "focusu" na polach do wpisywania danych
     @FXML
     public void initialize() {
         System.out.println("Initializing loginController.");

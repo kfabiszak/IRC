@@ -5,7 +5,9 @@ package irc;
  */
 public class Message {
 
+    //Nick użytkownika, który wysłał wiadomość
     private String nick;
+    //Treść wiadomości
     private String message;
 
     Message(String name, String text) {

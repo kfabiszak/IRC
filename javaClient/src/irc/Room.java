@@ -8,18 +8,18 @@ import java.util.List;
  */
 public class Room {
 
+    //Numer pokoju
     private int number;
+    //Lista użytkowników w pokoju
     private String[] users = null;
+    //Lista wiadomości w pokoju
     private List<Message> messages = new ArrayList<Message>();
+    //Informacja czy użytkownik dołączył do tego pokoju
     private  boolean joined = false;
 
 
     public Room(int nr){
-        number = nr;
-    }
-
-    public int getNumber() {
-        return number;
+        setNumber(nr);
     }
 
     public boolean isJoined() {
@@ -48,5 +48,9 @@ public class Room {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }
