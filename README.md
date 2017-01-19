@@ -59,10 +59,10 @@ Lista użytkowników (wysyłana przy każdej zmianie stanu liczby użytkowników
 - Użytkownik wpisuje numer portu oraz adres IP serwera.
 - Użytkownik wpisuje pożądany login.
 - Główne okno aplikacji uruchamiane jest po kliknięciu przycisku "Login" jeżeli:
-    > Nie wystąpił błąd łączenia z serwerem (np. błędny numer portu lub adres IP),
-    > Login nie jest pusty ani dłuższy niż 15 znaków,
-    > Login nie jest zarezerwowany ("system"),
-    > Login nie jesti zajęty przez innego użytkownika.
+    - Nie wystąpił błąd łączenia z serwerem (np. błędny numer portu lub adres IP),
+    - Login nie jest pusty ani dłuższy niż 15 znaków,
+    - Login nie jest zarezerwowany ("system"),
+    - Login nie jesti zajęty przez innego użytkownika.
 
 <h3>Chat:</h3>
 - Użytkownik automatycznie dołącza do pokoju numer 0 - znajdują się w nim
