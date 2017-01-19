@@ -52,3 +52,29 @@ Lista użytkowników (wysyłana przy każdej zmianie stanu liczby użytkowników
 - <code>#users#room_number#nick1#nick2#...</code>
 
 ---
+
+<h2>Aplikacja klienta</h2>
+
+<h3>Logowanie:</h3>
+- Użytkownik wpisuje numer portu oraz adres IP serwera.
+- Użytkownik wpisuje pożądany login.
+- Główne okno aplikacji uruchamiane jest po kliknięciu przycisku "Login" jeżeli:
+    > Nie wystąpił błąd łączenia z serwerem (np. błędny numer portu lub adres IP),
+    > Login nie jest pusty ani dłuższy niż 15 znaków,
+    > Login nie jest zarezerwowany ("system"),
+    > Login nie jesti zajęty przez innego użytkownika.
+
+<h3>Chat:</h3>
+- Użytkownik automatycznie dołącza do pokoju numer 0 - znajdują się w nim
+wszyscy użytkownicy. Pokoju 0 nie można opuścić.
+- Użytkownik może dołączyć do pokoju po wybraniu pożądanego numeru na liście 
+pokoi oraz kliknięciu przycisku "Join". Jeżeli użytkownik jest już w danym 
+pokoju w oknie chatu wyświetlni się odpowiedni komunikat o błędzie.
+- Użytkownik może opuścić pokój po wybraniu pożadanego numeru na liście pokoi 
+oraz kliknięciu przycisku "Leave". Jeżeli użytkownik nie dołączył wcześniej do 
+danego pokoju wyświetlni się odpowiedni komunikat o błędzie.
+- Użytkownik widzi listę użytkowników znajdujących się w pokoju aktualnie 
+wybranym na liście pokoi.
+- Użytkownik może napisać wiadomość do pokoju aktualnie wybranego na liście 
+pokoi poprzez wpisanie w polu wpisywania wiadomości tekst oraz naciśnięciu 
+klawisza "Enter".
