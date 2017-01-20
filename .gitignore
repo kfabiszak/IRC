@@ -12,3 +12,8 @@ Thumbs.db
 IRC
 DerivedData
 IRC.xcodeproj
+
+# javaClient
+.idea
+.iml
+.class
