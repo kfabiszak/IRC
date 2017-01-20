@@ -94,7 +94,7 @@ public class Controller {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    int header = 0;
+                    int header;
                     try {
                         while((header = Main.readHeader()) > 0) {
                             String line = "";
@@ -172,7 +172,7 @@ public class Controller {
                 }
             }
             if (oldList != null) {
-                for (int i = 0; i < oldList.length; i++) {
+                for (int i = 0; i < oldList.length; i++) { //TODO foreach
                     if (!Arrays.asList(usersList).contains(oldList[i])) {
                         if (!oldList[i].equals(" "))
                             if (!oldList[i].equals(Main.getLogin() + "(me)")) {

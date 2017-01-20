@@ -3,7 +3,6 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -21,11 +20,11 @@
                   </AnchorPane>
                   <AnchorPane SplitPane.resizableWithParent="false">
                      <children>
-                        <Button fx:id="leave" alignment="CENTER" contentDisplay="CENTER" layoutX="80.0" layoutY="6.0" mnemonicParsing="false" onAction="#leaveRoom" prefHeight="35.0" prefWidth="86.0" text="Leave" textAlignment="RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Button alignment="CENTER" contentDisplay="CENTER" layoutX="80.0" layoutY="6.0" mnemonicParsing="false" onAction="#leaveRoom" prefHeight="35.0" prefWidth="86.0" text="Leave" textAlignment="RIGHT" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="86.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets></Button>
-                        <Button fx:id="join" mnemonicParsing="false" onAction="#joinRoom" prefHeight="35.0" prefWidth="86.0" text="Join" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="0.0" />
+                        <Button mnemonicParsing="false" onAction="#joinRoom" prefHeight="35.0" prefWidth="86.0" text="Join" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                 <AnchorPane SplitPane.resizableWithParent="false">
@@ -34,7 +33,7 @@
                         <Label layoutX="8.0" layoutY="5.0" prefHeight="23.0" prefWidth="163.0" text="Users" />
                      </children>
                   </AnchorPane>
-                  <Button fx:id="relogin" mnemonicParsing="false" onAction="#relogin" onKeyPressed="#enterButton" prefHeight="30.0" prefWidth="119.0" text="Relogin" />
+                  <Button mnemonicParsing="false" onAction="#relogin" onKeyPressed="#enterButton" prefHeight="30.0" prefWidth="119.0" text="Relogin" />
               </items>
             </SplitPane>
          </children></AnchorPane>
@@ -46,7 +45,7 @@
                      <children>
                         <ScrollPane fx:id="scroll" prefHeight="293.0" prefViewportHeight="293.0" prefViewportWidth="414.0" prefWidth="414.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <TextFlow fx:id="chat" focusTraversable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TextFlow fx:id="chat" focusTraversable="true" prefWidth="395.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <cursor>
                                     <Cursor fx:constant="DEFAULT" />
                                  </cursor>

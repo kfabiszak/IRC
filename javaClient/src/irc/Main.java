@@ -192,7 +192,7 @@ public class Main extends Application {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(Main.class.getResource("IRC.fxml"));
                 rootChat = loader.load();
-                controller = (Controller) loader.getController();
+                controller = (Controller) loader.getController(); //TODO czy potrzebne
             } else {
                 System.out.println("Port empty.");
             }

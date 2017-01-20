@@ -6,12 +6,11 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added polish comments describing how things work.">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Add text wrapping in TextFlow, unwrapped in login.fxml, fixed order in login window, removed header initializer in readChat().">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/Controller.java" afterPath="$PROJECT_DIR$/src/irc/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/LoginController.java" afterPath="$PROJECT_DIR$/src/irc/LoginController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/IRC.fxml" afterPath="$PROJECT_DIR$/src/irc/IRC.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/Main.java" afterPath="$PROJECT_DIR$/src/irc/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/Message.java" afterPath="$PROJECT_DIR$/src/irc/Message.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/Room.java" afterPath="$PROJECT_DIR$/src/irc/Room.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/irc/login.fxml" afterPath="$PROJECT_DIR$/src/irc/login.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -79,8 +78,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/irc/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.9117646" vertical-offset="1839" max-vertical-offset="2992">
-              <caret line="195" column="20" selection-start-line="195" selection-start-column="20" selection-end-line="195" selection-end-column="20" />
+            <state vertical-scroll-proportion="-5.4117646" vertical-offset="1839" max-vertical-offset="2992">
+              <caret line="194" column="30" selection-start-line="194" selection-start-column="30" selection-end-line="194" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#deAccent#0;class#Main#0" expanded="false" />
@@ -103,18 +102,16 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/irc/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33212996" vertical-offset="1737" max-vertical-offset="3757">
-              <caret line="174" column="16" selection-start-line="174" selection-start-column="16" selection-end-line="174" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.29422382" vertical-offset="3968" max-vertical-offset="4539">
+              <caret line="356" column="9" selection-start-line="356" selection-start-column="9" selection-end-line="356" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#destroy#0;class#Controller#0" expanded="false" />
                 <element signature="method#relogin#0;class#Controller#0" expanded="false" />
                 <element signature="method#enter#0;class#Controller#0" expanded="false" />
                 <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-                <element signature="method#readChat#0;class#Controller#0" expanded="false" />
                 <element signature="method#show#0;class#Controller#0" expanded="false" />
                 <element signature="method#showError#0;class#Controller#0" expanded="false" />
-                <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
                 <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
                 <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
               </folding>
@@ -165,8 +162,8 @@
       <file leaf-file-name="login.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/irc/login.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8285713" vertical-offset="0" max-vertical-offset="476">
-              <caret line="12" column="128" selection-start-line="12" selection-start-column="128" selection-end-line="12" selection-end-column="128" />
+            <state vertical-scroll-proportion="-4.857143" vertical-offset="0" max-vertical-offset="527">
+              <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -178,8 +175,8 @@
       <file leaf-file-name="IRC.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/irc/IRC.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="272" max-vertical-offset="1292">
-              <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+            <state vertical-scroll-proportion="-5.142857" vertical-offset="500" max-vertical-offset="1275">
+              <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -207,13 +204,13 @@
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
         <option value="$PROJECT_DIR$/src/irc/Thread.java" />
         <option value="$PROJECT_DIR$/src/irc/Sender.java" />
-        <option value="$PROJECT_DIR$/src/irc/IRC.fxml" />
-        <option value="$PROJECT_DIR$/src/irc/login.fxml" />
-        <option value="$PROJECT_DIR$/src/irc/Controller.java" />
         <option value="$PROJECT_DIR$/src/irc/LoginController.java" />
         <option value="$PROJECT_DIR$/src/irc/Message.java" />
         <option value="$PROJECT_DIR$/src/irc/Room.java" />
+        <option value="$PROJECT_DIR$/src/irc/IRC.fxml" />
         <option value="$PROJECT_DIR$/src/irc/Main.java" />
+        <option value="$PROJECT_DIR$/src/irc/login.fxml" />
+        <option value="$PROJECT_DIR$/src/irc/Controller.java" />
       </list>
     </option>
   </component>
@@ -288,54 +285,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="irc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javaClient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javaClient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="production" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="IRC" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="irc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javaClient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="javaClient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="out" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="artifacts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="IRC" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -676,7 +625,7 @@
       <workItem from="1484406947927" duration="51191000" />
       <workItem from="1484695211694" duration="27000" />
       <workItem from="1484695250654" duration="516000" />
-      <workItem from="1484855205412" duration="3221000" />
+      <workItem from="1484855205412" duration="6091000" />
     </task>
     <task id="LOCAL-00001" summary="Bold user names.">
       <created>1484695563591</created>
@@ -690,11 +639,17 @@
       <option name="project" value="LOCAL" />
       <updated>1484856435018</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added polish comments describing how things work.">
+      <created>1484858434703</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1484858434703</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="115340000" />
+    <option name="totallyTimeSpent" value="118210000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
@@ -782,7 +737,10 @@
     <MESSAGE value="Bold user names." />
     <MESSAGE value="Added .jar" />
     <MESSAGE value="Added polish comments describing how things work." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added polish comments describing how things work." />
+    <MESSAGE value="Add text wrapping in TextFlow" />
+    <MESSAGE value="Add text wrapping in TextFlow, unwrapped in login.fxml, fixed order in login window." />
+    <MESSAGE value="Add text wrapping in TextFlow, unwrapped in login.fxml, fixed order in login window, removed header initializer in readChat()." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add text wrapping in TextFlow, unwrapped in login.fxml, fixed order in login window, removed header initializer in readChat()." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -891,10 +849,8 @@
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
@@ -1014,10 +970,8 @@
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
@@ -1092,10 +1046,8 @@
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
@@ -1170,10 +1122,8 @@
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
@@ -1248,10 +1198,8 @@
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
@@ -1326,10 +1274,8 @@
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
@@ -1379,10 +1325,8 @@
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
@@ -1432,10 +1376,8 @@
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
@@ -1470,28 +1412,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/irc/login.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8285713" vertical-offset="0" max-vertical-offset="476">
-          <caret line="12" column="128" selection-start-line="12" selection-start-column="128" selection-end-line="12" selection-end-column="128" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/irc/IRC.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="272" max-vertical-offset="1292">
-          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/irc/Message.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="425">
@@ -1512,10 +1432,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/irc/IRC.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.142857" vertical-offset="500" max-vertical-offset="1275">
+          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/irc/login.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.857143" vertical-offset="0" max-vertical-offset="527">
+          <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/irc/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.9117646" vertical-offset="1839" max-vertical-offset="2992">
-          <caret line="195" column="20" selection-start-line="195" selection-start-column="20" selection-end-line="195" selection-end-column="20" />
+        <state vertical-scroll-proportion="-5.4117646" vertical-offset="1839" max-vertical-offset="2992">
+          <caret line="194" column="30" selection-start-line="194" selection-start-column="30" selection-end-line="194" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#deAccent#0;class#Main#0" expanded="false" />
@@ -1536,18 +1478,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/irc/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33212996" vertical-offset="1737" max-vertical-offset="3757">
-          <caret line="174" column="16" selection-start-line="174" selection-start-column="16" selection-end-line="174" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.29422382" vertical-offset="3968" max-vertical-offset="4539">
+          <caret line="356" column="9" selection-start-line="356" selection-start-column="9" selection-end-line="356" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#destroy#0;class#Controller#0" expanded="false" />
             <element signature="method#relogin#0;class#Controller#0" expanded="false" />
             <element signature="method#enter#0;class#Controller#0" expanded="false" />
             <element signature="method#enterButton#0;class#Controller#0" expanded="false" />
-            <element signature="method#readChat#0;class#Controller#0" expanded="false" />
             <element signature="method#show#0;class#Controller#0" expanded="false" />
             <element signature="method#showError#0;class#Controller#0" expanded="false" />
-            <element signature="method#setRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#joinRoom#0;class#Controller#0" expanded="false" />
             <element signature="method#leaveRoom#0;class#Controller#0" expanded="false" />
           </folding>
