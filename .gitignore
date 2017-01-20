@@ -16,4 +16,5 @@ IRC.xcodeproj
 # javaClient
 .idea
 .iml
+production
 .class

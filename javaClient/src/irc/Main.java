@@ -186,8 +186,6 @@ public class Main extends Application {
             if (port != 0) {
                 if (!connected){
                     connect();
-//                } else {
-//                    login();
                 }
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(Main.class.getResource("IRC.fxml"));
@@ -255,8 +253,9 @@ public class Main extends Application {
 
     //Rozłączanie z serwerem
     public static void disconnect(){
-        try{
-            send("#logout");
+//        if(socket.isConnected()) {
+            try {
+              send("#logout");
             bwriter.close();
             System.out.println("*** Closed BufferedWriter.");
             outputStreamWriter.close();
@@ -269,12 +268,13 @@ public class Main extends Application {
             System.out.println("*** Closed BufferedReader.");
             inputStreamReader.close();
             System.out.println("*** Closed InputStreamReader.");
-            socket.close();
-            System.out.println("*** Disconnected from server.");
-            connected = false;
-        }catch (Exception e){
-            System.out.println("Disconnect error: " + e);
-        }
+              socket.close();
+              System.out.println("*** Disconnected from server.");
+              connected = false;
+            } catch (Exception e) {
+                System.out.println("Disconnect error: " + e);
+            }
+//        }
     }
 
     //Wyświetlanie błędu - login zajęty

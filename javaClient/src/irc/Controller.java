@@ -172,19 +172,37 @@ public class Controller {
                 }
             }
             if (oldList != null) {
-                for (int i = 0; i < oldList.length; i++) { //TODO foreach
-                    if (!Arrays.asList(usersList).contains(oldList[i])) {
-                        if (!oldList[i].equals(" "))
-                            if (!oldList[i].equals(Main.getLogin() + "(me)")) {
-                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + oldList[i] + " left the room.", "system");
+//                for (int i = 0; i < oldList.length; i++) { //TODO foreach sprawdzic czy dziala
+//                    if (!Arrays.asList(usersList).contains(oldList[i])) {
+//                        if (!oldList[i].equals(" "))
+//                            if (!oldList[i].equals(Main.getLogin() + "(me)")) {
+//                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + oldList[i] + " left the room.", "system");
+//                            }
+//                    }
+//                }
+                for (String u : oldList) {
+                    if (!Arrays.asList(usersList).contains(u)) {
+                        if (!u.equals(" "))
+                            if (!u.equals(Main.getLogin() + "(me)")) {
+                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + u + " left the room.", "system");
                             }
                     }
                 }
-                for (int i = 0; i < usersList.length; i++) {
-                    if (!Arrays.asList(oldList).contains(usersList[i])) {
-                        if (!usersList[i].equals(" "))
-                            if (!usersList[i].equals(Main.getLogin() + "(me)")) {
-                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + usersList[i] + " joined the room.", "system");
+//                for (int i = 0; i < usersList.length; i++) {
+//                    if (!Arrays.asList(oldList).contains(usersList[i])) {
+//                        if (!usersList[i].equals(" "))
+//                            if (!usersList[i].equals(Main.getLogin() + "(me)")) {
+//                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + usersList[i] + " joined the room.", "system");
+//                            } else {
+//                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + Main.getLogin() + " joined the room.", "system");
+//                            }
+//                    }
+//                }
+                for (String u : usersList) {
+                    if (!Arrays.asList(oldList).contains(u)) {
+                        if (!u.equals(" "))
+                            if (!u.equals(Main.getLogin() + "(me)")) {
+                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + u + " joined the room.", "system");
                             } else {
                                 Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + Main.getLogin() + " joined the room.", "system");
                             }
