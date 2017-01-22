@@ -59,10 +59,8 @@ Lista użytkowników (wysyłana przy każdej zmianie stanu liczby użytkowników
 Aplikacja wykonana w JavaFX.
 
 Projekt przygotowany w środowisku IntelliJ. Aby skompilować go w innym środowisku 
-
-należy stworzyć nowy projekt aplikacji JavaFX i wykorzystać paczkę src z projektu 
-
-javaClient. 
+należy stworzyć nowy projekt aplikacji JavaFX i wykorzystać paczkę 
+<code>src</code> z projektu javaClient. 
 
 Alternatywą jest wywołanie:
 
@@ -83,25 +81,17 @@ Aplikację można również uruchomić z javaClient.jar.
 
 <h3>Chat:</h3>
 - Użytkownik automatycznie dołącza do pokoju numer 0 - znajdują się w nim
-
 wszyscy użytkownicy. Pokoju 0 nie można opuścić.
 - Znak (!) przy numerze pokoju oznacza, że użytkowanik dołączył do danego pokoju.
 - Użytkownik może dołączyć do pokoju po wybraniu pożądanego numeru na liście 
-
 pokoi oraz kliknięciu przycisku "Join". Jeżeli użytkownik jest już w danym 
-
 pokoju w oknie chatu wyświetlni się odpowiedni komunikat o błędzie.
 - Użytkownik może opuścić pokój po wybraniu pożadanego numeru na liście pokoi 
-
 oraz kliknięciu przycisku "Leave". Jeżeli użytkownik nie dołączył wcześniej do 
-
 danego pokoju wyświetlni się odpowiedni komunikat o błędzie.
 - Użytkownik widzi listę użytkowników znajdujących się w pokoju aktualnie 
-
 wybranym na liście pokoi.
 - Użytkownik może napisać wiadomość do pokoju aktualnie wybranego na liście 
-
 pokoi poprzez wpisanie w polu wpisywania wiadomości tekst oraz naciśnięciu 
-
 klawisza "Enter".
 - Znak (*) przy numerze pokoju oznacza, że w danym pojawiła się nowa wiadomość.
