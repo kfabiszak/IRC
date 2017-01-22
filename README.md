@@ -60,7 +60,7 @@ Aplikacja wykonana w JavaFX.
 
 Projekt przygotowany w środowisku IntelliJ. Aby skompilować go w innym środowisku 
 należy stworzyć nowy projekt aplikacji JavaFX i wykorzystać paczkę 
-<code>src</code> z projektu javaClient. 
+<code>src</code> z projektu <code>javaClient</code>. 
 
 Alternatywą jest wywołanie:
 
@@ -68,7 +68,7 @@ Alternatywą jest wywołanie:
 
 <code>java Main</code>
 
-Aplikację można również uruchomić z javaClient.jar.
+Aplikację można również uruchomić z <code>javaClient.jar</code>.
 
 <h3>Logowanie:</h3>
 - Użytkownik wpisuje numer portu oraz adres IP serwera.
