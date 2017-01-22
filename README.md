@@ -94,6 +94,8 @@ pokoju w oknie chatu wyświetlni się odpowiedni komunikat o błędzie.
 - Użytkownik może opuścić pokój po wybraniu pożadanego numeru na liście pokoi 
 oraz kliknięciu przycisku "Leave". Jeżeli użytkownik nie dołączył wcześniej do 
 danego pokoju wyświetlni się odpowiedni komunikat o błędzie.
+- Użytkownik widzi wiadomości z pokoju aktualnie wybranego na liście pokoi w 
+formacie <code>nick: wiadomość</code>.
 - Użytkownik widzi listę użytkowników znajdujących się w pokoju aktualnie 
 wybranym na liście pokoi.
 - Użytkownik może napisać wiadomość do pokoju aktualnie wybranego na liście 
