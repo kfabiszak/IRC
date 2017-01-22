@@ -43,8 +43,8 @@ public class Controller {
     public void destroy() {
         if (p != null) {
             p.destroy();
+            System.out.println("Main controller destroyed.");
         }
-        System.out.println("Main controller destroyed.");
     }
 
     //Wylogowanie z aktualnego chatu i wyświetlenie okna logowania

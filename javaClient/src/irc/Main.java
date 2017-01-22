@@ -263,28 +263,28 @@ public class Main extends Application {
 
     //Rozłączanie z serwerem
     public static void disconnect(){
-//        if(socket.isConnected()) {
+        if(!socket.isClosed()) {
             try {
-              send("#logout");
-            bwriter.close();
-            System.out.println("*** Closed BufferedWriter.");
-            outputStreamWriter.close();
-            System.out.println("*** Closed OutputStreamWriter.");
-            outToServer.close();
-            System.out.println("*** Closed DataOutputStream.");
-            inFromServer.close();
-            System.out.println("*** Closed DataInputStream.");
-            breader.close();
-            System.out.println("*** Closed BufferedReader.");
-            inputStreamReader.close();
-            System.out.println("*** Closed InputStreamReader.");
-              socket.close();
-              System.out.println("*** Disconnected from server.");
-              connected = false;
+                send("#logout");
+                bwriter.close();
+                System.out.println("*** Closed BufferedWriter.");
+                outputStreamWriter.close();
+                System.out.println("*** Closed OutputStreamWriter.");
+                outToServer.close();
+                System.out.println("*** Closed DataOutputStream.");
+                inFromServer.close();
+                System.out.println("*** Closed DataInputStream.");
+                breader.close();
+                System.out.println("*** Closed BufferedReader.");
+                inputStreamReader.close();
+                System.out.println("*** Closed InputStreamReader.");
+                socket.close();
+                System.out.println("*** Disconnected from server.");
+                connected = false;
             } catch (Exception e) {
                 System.out.println("Disconnect error: " + e);
             }
-//        }
+        }
     }
 
     //Wyświetlanie błędu - login zajęty
