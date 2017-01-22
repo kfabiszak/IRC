@@ -2,8 +2,11 @@
 
 ---
 <h2>Serwer</h2>
-Korzysta z synchronizacji I/O multiplexing z funkcją select
-
+- Wykorzystuje synchronizacje I/O multiplexing z funkcją select
+- Port ustawiony domyślnie na 3012 (numer portu można zmienić wewnątrz funkcji initSockAddr)
+- Kompilacja:
+    - gcc -Wall main.c -o server
+    
 <h2>Protokół komunikacyjny</h2>
 
 <h3>Wysyłanie wiadomości:</h3>
