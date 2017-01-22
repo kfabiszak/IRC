@@ -15,7 +15,9 @@ public class Room {
     //Lista wiadomości w pokoju
     private List<Message> messages = new ArrayList<Message>();
     //Informacja czy użytkownik dołączył do tego pokoju
-    private  boolean joined = false;
+    private boolean joined = false;
+    //Informacja czy w pokoju jest nowa wiadomość
+    private boolean newMess = false;
 
 
     public Room(int nr){
@@ -52,5 +54,13 @@ public class Room {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public boolean isNewMess() {
+        return newMess;
+    }
+
+    public void setNewMess(boolean newMess) {
+        this.newMess = newMess;
     }
 }

@@ -172,14 +172,6 @@ public class Controller {
                 }
             }
             if (oldList != null) {
-//                for (int i = 0; i < oldList.length; i++) { //TODO foreach sprawdzic czy dziala
-//                    if (!Arrays.asList(usersList).contains(oldList[i])) {
-//                        if (!oldList[i].equals(" "))
-//                            if (!oldList[i].equals(Main.getLogin() + "(me)")) {
-//                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + oldList[i] + " left the room.", "system");
-//                            }
-//                    }
-//                }
                 for (String u : oldList) {
                     if (!Arrays.asList(usersList).contains(u)) {
                         if (!u.equals(" "))
@@ -188,16 +180,6 @@ public class Controller {
                             }
                     }
                 }
-//                for (int i = 0; i < usersList.length; i++) {
-//                    if (!Arrays.asList(oldList).contains(usersList[i])) {
-//                        if (!usersList[i].equals(" "))
-//                            if (!usersList[i].equals(Main.getLogin() + "(me)")) {
-//                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + usersList[i] + " joined the room.", "system");
-//                            } else {
-//                                Main.getRooms()[Integer.parseInt(arg)].addMessage("User " + Main.getLogin() + " joined the room.", "system");
-//                            }
-//                    }
-//                }
                 for (String u : usersList) {
                     if (!Arrays.asList(oldList).contains(u)) {
                         if (!u.equals(" "))
@@ -213,6 +195,9 @@ public class Controller {
             setRoom();
         } else if (cmd.equals("send")) {
             Main.getRooms()[Integer.parseInt(arg)].addMessage(msg, nick);
+            if(Integer.parseInt(arg) != Main.getRoom()) {
+                Main.addNew(Integer.parseInt(arg));
+            }
             show(Integer.parseInt(arg));
         } else if (cmd.equals("success")) {
             if(arg.equals("connect")) {
@@ -220,6 +205,7 @@ public class Controller {
                 System.out.println("Success connected.");
             } else if (arg.equals("login")) {
                 Main.setLogged(true);
+                Main.addJoin(0);
                 System.out.println("Success logged.");
                 Platform.runLater(new Runnable() {
                     public void run() {
@@ -233,6 +219,7 @@ public class Controller {
             } else if (arg.equals("join")) {
                 try {
                     Main.joinRoom(Integer.parseInt(nick));
+                    Main.addJoin(Integer.parseInt(nick));
                     Main.getRooms()[Integer.parseInt(nick)].addMessage("User " + Main.getLogin() + " joined the room.", "system");
                 } catch (Exception e) {
                     System.out.println("Join room (with success from server) error: " + e);
@@ -240,6 +227,7 @@ public class Controller {
             } else if (arg.equals("leave")) {
                 try{
                     Main.leaveRoom(Integer.parseInt(nick));
+                    Main.clearRoom(Integer.parseInt(nick));
                     Main.getRooms()[Integer.parseInt(nick)].setUsers(null);
                     setRoom();
                 } catch (Exception e) {
@@ -266,23 +254,26 @@ public class Controller {
                         showError("You didn't join room " + roomNum + " yet.");
                         notInRoom = false;
                     }
-                    for (Message object: Main.getRooms()[roomNum].getMessages()) {
-                        Text name = new Text (object.getNick() + ": ");
-                        name.setFont(Font.font("Verdana", FontWeight.BOLD, 13));
-                        if (!object.getNick().equals(Main.getLogin())) {
-                            if (object.getNick().equals("system")) {
-                                name.setFill(Color.RED);
+                    Main.clearRoom(roomNum);
+                    if(roomNum >= 0) {
+                        for (Message object : Main.getRooms()[roomNum].getMessages()) {
+                            Text name = new Text(object.getNick() + ": ");
+                            name.setFont(Font.font("Verdana", FontWeight.BOLD, 13));
+                            if (!object.getNick().equals(Main.getLogin())) {
+                                if (object.getNick().equals("system")) {
+                                    name.setFill(Color.RED);
+                                } else {
+                                    name.setFill(Color.BLUE);
+                                }
                             } else {
-                                name.setFill(Color.BLUE);
+                                name.setFill(Color.GREEN);
                             }
-                        } else {
-                            name.setFill(Color.GREEN);
+                            chat.getChildren().add(name);
+                            Text t = new Text(object.getMessage() + "\n");
+                            chat.getChildren().add(t);
                         }
-                        chat.getChildren().add(name);
-                        Text t = new Text(object.getMessage() + "\n"); //TODO trimujemy wiadomosci czy nie ?1! //pogrubiac wiadomosci od systemu
-                        chat.getChildren().add(t);
+                        scroll.setVvalue(1.0);
                     }
-                    scroll.setVvalue(1.0);
                 }
             });
         }
@@ -369,6 +360,17 @@ public class Controller {
         } catch (Exception e) {
             System.out.println("Leave room button error: " + e);
         }
+    }
+
+    @FXML
+    public void refreshRooms(final int roomNum){
+        Platform.runLater(new Runnable() {
+            public void run() {
+                ObservableList<String> rooms = FXCollections.observableArrayList(Main.getRoomList());
+                roomList.setItems(rooms);
+                roomList.getSelectionModel().select(Main.getRoom());
+            }
+        });
     }
 
     //Inicjalizacja głównego okna aplikacji

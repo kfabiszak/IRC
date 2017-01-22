@@ -106,6 +106,32 @@ public class Main extends Application {
         return pattern.matcher(nfdNormalizedString).replaceAll("").replaceAll("ł","l").replaceAll("Ł","L");
     }
 
+    //Dodawanie znaku dołączenia do pokoju (!)
+    public static void addJoin(int roomNum) {
+        roomList[roomNum] += " (!)";
+        controller.refreshRooms(roomNum);
+    }
+
+    //Dodawanie znaku nowej wiadomości w pokoju (*)
+    public static void addNew(int roomNum) {
+        if(!rooms[roomNum].isNewMess()) {
+            roomList[roomNum] += " (*)";
+            rooms[roomNum].setNewMess(true);
+            controller.refreshRooms(roomNum);
+        }
+    }
+
+    //Usuwanie znaków przy numerze pokoju, zostawiam (!) jeśli jest w tym pokoju
+    public static void clearRoom(int roomNum) {
+        if(roomNum >= 0 && roomNum < 20) {
+            rooms[roomNum].setNewMess(false);
+            roomList[roomNum] = Integer.toString(roomNum);
+            if (rooms[roomNum].isJoined())
+                addJoin(roomNum);
+            controller.refreshRooms(roomNum);
+        }
+    }
+
     //Wysyłanie tekstu przez Buffered Writer
     public static void sendString(BufferedWriter bw, String str) {
         try {
