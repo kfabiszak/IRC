@@ -57,6 +57,12 @@ Lista użytkowników (wysyłana przy każdej zmianie stanu liczby użytkowników
 
 <h2>Aplikacja klienta</h2>
 Aplikacja wykonana w JavaFX.
+Projekt przygotowany w środowisku IntelliJ. Aby skompilować go w innym środowisku 
+należy stworzyć nowy projekt aplikacji JavaFX i wykorzystać paczkę src z projektu 
+javaClient. Alternatywą jest wywołanie:
+<code>javac Main.java</code>
+<code>java Main</code>
+Aplikację można również uruchomić z javaClient.jar.
 
 <h3>Logowanie:</h3>
 - Użytkownik wpisuje numer portu oraz adres IP serwera.
