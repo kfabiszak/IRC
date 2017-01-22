@@ -10,8 +10,7 @@
     <Button fx:id="button" layoutX="142.0" layoutY="241.0" mnemonicParsing="false" onAction="#login"
             onKeyPressed="#enter" text="Log In"/>
     <TextField fx:id="port" layoutX="80.0" layoutY="52.0" onKeyPressed="#enter" promptText="Port" text="3012"/>
-    <TextField fx:id="address" layoutX="80.0" layoutY="96.0" onKeyPressed="#enter" promptText="IP address"
-               text="192.168.0.101"/>
+    <TextField fx:id="address" layoutX="80.0" layoutY="96.0" onKeyPressed="#enter" promptText="IP address"/>
     <Label graphicTextGap="5.0" layoutX="142.0" layoutY="14.0" text="Welcome"/>
     <Label fx:id="connectError" layoutX="128.0" layoutY="136.0" text="Can't connect" textFill="RED" visible="false"/>
     <Label fx:id="loginErrorLong" layoutX="76.0" layoutY="205.0" text="Login can't be longer than 15" textFill="RED"
