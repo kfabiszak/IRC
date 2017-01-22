@@ -1,6 +1,8 @@
 <h1>Komunikator internetowy typu IRC</h1>
 
 ---
+<h2>Serwer</h2>
+Korzysta z synchronizacji I/O multiplexing z funkcją select
 
 <h2>Protokół komunikacyjny</h2>
 
@@ -68,6 +70,7 @@ Aplikacja wykonana w JavaFX.
 <h3>Chat:</h3>
 - Użytkownik automatycznie dołącza do pokoju numer 0 - znajdują się w nim
 wszyscy użytkownicy. Pokoju 0 nie można opuścić.
+- Znak (!) przy numerze pokoju oznacza, że użytkowanik dołączył do danego pokoju.
 - Użytkownik może dołączyć do pokoju po wybraniu pożądanego numeru na liście 
 pokoi oraz kliknięciu przycisku "Join". Jeżeli użytkownik jest już w danym 
 pokoju w oknie chatu wyświetlni się odpowiedni komunikat o błędzie.
@@ -79,3 +82,4 @@ wybranym na liście pokoi.
 - Użytkownik może napisać wiadomość do pokoju aktualnie wybranego na liście 
 pokoi poprzez wpisanie w polu wpisywania wiadomości tekst oraz naciśnięciu 
 klawisza "Enter".
+- Znak (*) przy numerze pokoju oznacza, że w danym pojawiła się nowa wiadomość.
