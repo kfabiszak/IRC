@@ -54,6 +54,7 @@ Lista użytkowników (wysyłana przy każdej zmianie stanu liczby użytkowników
 ---
 
 <h2>Aplikacja klienta</h2>
+Aplikacja wykonana w JavaFX.
 
 <h3>Logowanie:</h3>
 - Użytkownik wpisuje numer portu oraz adres IP serwera.
