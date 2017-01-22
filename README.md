@@ -76,7 +76,8 @@ Alternatywą jest wywołanie:
 Aplikację można również uruchomić z <code>javaClient.jar</code>.
 
 <h3>Logowanie:</h3>
-- Użytkownik wpisuje numer portu oraz adres IP serwera (Port jest domyślnie ustawiony na taki jak w serwerze - 3012).
+- Użytkownik wpisuje numer portu oraz adres IP serwera (Port jest domyślnie 
+ustawiony na taki jak w serwerze - 3012).
 - Użytkownik wpisuje pożądany login.
 - Główne okno aplikacji uruchamiane jest po kliknięciu przycisku "Login" jeżeli:
     - Nie wystąpił błąd łączenia z serwerem (np. błędny numer portu lub adres IP),
@@ -85,14 +86,15 @@ Aplikację można również uruchomić z <code>javaClient.jar</code>.
     - Login nie jesti zajęty przez innego użytkownika.
 
 <h3>Chat:</h3>
-- Użytkownik automatycznie dołącza do pokoju numer 0 - znajdują się w nim
+- Użytkownik automatycznie dołącza do pokoju numer 0 - znajdują się w nim 
 wszyscy użytkownicy. Pokoju 0 nie można opuścić.
-- Znak (!) przy numerze pokoju oznacza, że użytkownik dołączył do danego pokoju.
+- Znak <code>(!)</code> przy numerze pokoju oznacza, że użytkownik dołączył do 
+danego pokoju.
 - Użytkownik może dołączyć do pokoju po wybraniu pożądanego numeru na liście 
-pokoi oraz kliknięciu przycisku "Join". Jeżeli użytkownik jest już w danym 
+pokoi oraz kliknięciu przycisku <code>Join</code>. Jeżeli użytkownik jest już w danym 
 pokoju w oknie chatu wyświetlni się odpowiedni komunikat o błędzie.
 - Użytkownik może opuścić pokój po wybraniu pożadanego numeru na liście pokoi 
-oraz kliknięciu przycisku "Leave". Jeżeli użytkownik nie dołączył wcześniej do 
+oraz kliknięciu przycisku <code>Leave</code>. Jeżeli użytkownik nie dołączył wcześniej do 
 danego pokoju wyświetlni się odpowiedni komunikat o błędzie.
 - Użytkownik widzi wiadomości z pokoju aktualnie wybranego na liście pokoi w 
 formacie <code>nick: wiadomość</code>.
@@ -100,5 +102,6 @@ formacie <code>nick: wiadomość</code>.
 wybranym na liście pokoi.
 - Użytkownik może napisać wiadomość do pokoju aktualnie wybranego na liście 
 pokoi poprzez wpisanie tesktu w polu wpisywania wiadomości oraz naciśnięciu 
-klawisza "Enter".
-- Znak (*) przy numerze pokoju oznacza, że w danym pojawiła się nowa wiadomość.
+klawisza <code>Enter</code>.
+- Znak <code>(*)</code> przy numerze pokoju oznacza, że w danym pojawiła się 
+nowa wiadomość.
