@@ -79,10 +79,11 @@ Aplikację można również uruchomić z <code>javaClient.jar</code>.
 - Użytkownik wpisuje numer portu oraz adres IP serwera (Port jest domyślnie 
 ustawiony na taki jak w serwerze - 3012).
 - Użytkownik wpisuje pożądany login.
-- Główne okno aplikacji uruchamiane jest po kliknięciu przycisku "Login" jeżeli:
+- Główne okno aplikacji uruchamiane jest po kliknięciu przycisku 
+<code>Login</code> jeżeli:
     - Nie wystąpił błąd łączenia z serwerem (np. błędny numer portu lub adres IP),
     - Login nie jest pusty ani dłuższy niż 15 znaków,
-    - Login nie jest zarezerwowany ("system"),
+    - Login nie jest zarezerwowany (<code>system</code>),
     - Login nie jesti zajęty przez innego użytkownika.
 
 <h3>Chat:</h3>
