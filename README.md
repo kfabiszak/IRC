@@ -5,7 +5,9 @@
 - Wykorzystuje synchronizacje I/O multiplexing z funkcją select
 - Port ustawiony domyślnie na 3012 (numer portu można zmienić wewnątrz funkcji initSockAddr)
 - Kompilacja:
-    - gcc -Wall main.c -o server
+    - <code>gcc -Wall main.c -o server</code>
+- Uruchomienie:
+    - <code>./server</code>
     
 <h2>Protokół komunikacyjny</h2>
 
@@ -74,7 +76,7 @@ Alternatywą jest wywołanie:
 Aplikację można również uruchomić z <code>javaClient.jar</code>.
 
 <h3>Logowanie:</h3>
-- Użytkownik wpisuje numer portu oraz adres IP serwera.
+- Użytkownik wpisuje numer portu oraz adres IP serwera (Port jest domyślnie ustawiony na taki jak w serwerze - 3012).
 - Użytkownik wpisuje pożądany login.
 - Główne okno aplikacji uruchamiane jest po kliknięciu przycisku "Login" jeżeli:
     - Nie wystąpił błąd łączenia z serwerem (np. błędny numer portu lub adres IP),
@@ -85,7 +87,7 @@ Aplikację można również uruchomić z <code>javaClient.jar</code>.
 <h3>Chat:</h3>
 - Użytkownik automatycznie dołącza do pokoju numer 0 - znajdują się w nim
 wszyscy użytkownicy. Pokoju 0 nie można opuścić.
-- Znak (!) przy numerze pokoju oznacza, że użytkowanik dołączył do danego pokoju.
+- Znak (!) przy numerze pokoju oznacza, że użytkownik dołączył do danego pokoju.
 - Użytkownik może dołączyć do pokoju po wybraniu pożądanego numeru na liście 
 pokoi oraz kliknięciu przycisku "Join". Jeżeli użytkownik jest już w danym 
 pokoju w oknie chatu wyświetlni się odpowiedni komunikat o błędzie.
@@ -95,6 +97,6 @@ danego pokoju wyświetlni się odpowiedni komunikat o błędzie.
 - Użytkownik widzi listę użytkowników znajdujących się w pokoju aktualnie 
 wybranym na liście pokoi.
 - Użytkownik może napisać wiadomość do pokoju aktualnie wybranego na liście 
-pokoi poprzez wpisanie w polu wpisywania wiadomości tekst oraz naciśnięciu 
+pokoi poprzez wpisanie tesktu w polu wpisywania wiadomości oraz naciśnięciu 
 klawisza "Enter".
 - Znak (*) przy numerze pokoju oznacza, że w danym pojawiła się nowa wiadomość.
