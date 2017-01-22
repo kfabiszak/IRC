@@ -171,7 +171,7 @@ int readMsg (int socket, char** result) {
     UInt32 length = 0;
     readHeader(socket, sizeof(length), (void*)(&length));
 //    printf("$$User %d: size=%d\n", socket, length);
-    length = ntohl(length); // comment with java client !
+//    length = ntohl(length); // comment for java client ! / uncomment for c client
     if(length > 0 && length <= 256) {
         *result = malloc((length)*sizeof(char));
         readXBytes(socket, length, (void*)*result);
@@ -573,7 +573,7 @@ int main(int argc, char* argv[]) {
     
     printf("#SERVER RUNNING#\n");
     printf("To close server press ctrl + c\n");
-    //main loop
+    
     while(keepRunning) {
         //copy the write set
         fsWmask = fsMask;
@@ -635,13 +635,13 @@ int main(int argc, char* argv[]) {
         
         //READ MSG FROM ALL VALID USERS
         int ur;
-        for (ur = 0; ur < USER_SIZE; ur++) {
+        for (ur = 0; ur < USER_SIZE; ur++) {            // Pętla przez wszystkich urzytkowników
             user = *rooms[0].users[ur];
             userDesc = user.descriptor;
-            if(user.isValid == 1) {
-                if (FD_ISSET(userDesc, &fsRmask)) {
+            if(user.isValid == 1) {                     // Urzytkownik jest zalogowany
+                if (FD_ISSET(userDesc, &fsRmask)) {     // Sprawdzenie czy maska urzytkownika fsRmask (czytanie) jest ustawiona
                     char* readBuffer;
-                    if(readMsg(userDesc, &readBuffer)) {
+                    if(readMsg(userDesc, &readBuffer)) {// Czytanie wiadomości
                         printf("<<User %d: Received: '%s'\n", userDesc, readBuffer);
                         runCmd(userDesc, readBuffer);
                     }
@@ -651,14 +651,14 @@ int main(int argc, char* argv[]) {
         
         //IF ROOM IS DIRTY SET EACH USER MASK TO WRITE
         int rw;
-        for (rw = 0; rw < ROOM_SIZE; rw++) {
+        for (rw = 0; rw < ROOM_SIZE; rw++) {            // Pętla dla wszystkich pokoi
             room = rooms[rw];
-            if(room.isDirty) {
+            if(room.isDirty) {                          // Pokój zawiera wiadomości do wysłania
                 int uw;
-                for(uw = 0; uw < room.size; uw++) {
-                    if(room.users[uw]->isValid == 1) {
+                for(uw = 0; uw < room.size; uw++) {     // Pętla dla wszystkich urzytkowników w pokoju
+                    if(room.users[uw]->isValid == 1) {  // Urzytkownik jest zalogowany
                         userDesc = room.users[uw]->descriptor;
-                        FD_SET(userDesc, &fsMask);
+                        FD_SET(userDesc, &fsMask);      // Ustawienie maski fsMask (wysyłanie) dla urzytkownika
                     }
                 }
             }
@@ -667,31 +667,33 @@ int main(int argc, char* argv[]) {
         
         //IF USER HAS SET WRITE MASK, SEND MESSAGE TO THAT USER
         int rs;
-        for (rs = 0; rs < ROOM_SIZE; rs++) {
+        for (rs = 0; rs < ROOM_SIZE; rs++) {            // Pętla dla wszystkich pokoi
             room = rooms[rs];
             int us;
-            for (us = 0; us < room.size; us++) {
+            for (us = 0; us < room.size; us++) {        // Pętla dla wszystkich urzytkowników w pokoju
                 user = *room.users[us];
                 userDesc = user.descriptor;
-                if(user.isValid == 1)
+                if(user.isValid == 1)                   // Urzytkownik jest zalogowany
                     if (FD_ISSET(userDesc, &fsWmask)) {
-                        for(int m = 0; m < MESSAGE_SIZE; m++) {
-                            message = room.messages[m];
-                            if(message.toSend) {
-                                sendMsg(userDesc, message.text, message.length);
+                        int ms;
+                        for(ms = 0; ms < MESSAGE_SIZE; ms++) {                  // Pętla przez wszystkie wiadomości otrzymane w pokoju
+                            message = room.messages[ms];
+                            if(message.toSend) {                                // Wiadomość gotowa do wysłania
+                                sendMsg(userDesc, message.text, message.length);// Wysłanie wiadomości
                             }
                         }
                         FD_CLR(userDesc, &fsMask);
                     }
             }
-            int m;
-            for (m = 0; m < room.size; m++) {
-                if(room.messages[m].toSend > 0)
-                    rooms[rs].messages[m].toSend -= 1;
+            int ms2;
+            for (ms2 = 0; ms2 < room.size; ms2++) {     // Oznaczenie wiadomości jako wysłane
+                if(room.messages[ms2].toSend > 0)
+                    rooms[rs].messages[ms2].toSend -= 1;
             }
         }
     }
     
+    //CLEAR WHEN SERVER STOP
     FD_ZERO(&fsRmask);
     FD_ZERO(&fsWmask);
     FD_ZERO(&fsMask);
