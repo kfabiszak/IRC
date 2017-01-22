@@ -3,7 +3,7 @@
 ---
 <h2>Serwer</h2>
 - Wykorzystuje synchronizacje I/O multiplexing z funkcją select
-- Port ustawiony domyślnie na 3012 (numer portu można zmienić wewnątrz funkcji initSockAddr)
+- Port ustawiony domyślnie na <code>3012</code> (numer portu można zmienić wewnątrz funkcji <code>initSockAddr</code>)
 - Kompilacja:
     - <code>gcc -Wall main.c -o server</code>
 - Uruchomienie:
