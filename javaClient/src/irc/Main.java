@@ -17,13 +17,17 @@ import java.util.regex.Pattern;
 public class Main extends Application {
 
 
-    private static Stage primaryStage;
-    private static Parent rootChat;
+    //Server's IP address
     private static String server = null;
+    //Port number
     private static int port = 0;
+    //User's login
     private static String login = null;
+    //Room shown in the main chat
     private static int room = 0;
+    //List of rooms
     private static String[] roomList = new String[20];
+    //Room structures
     private static Room[] rooms = new Room[20];
 
     private static Socket socket;
@@ -34,10 +38,16 @@ public class Main extends Application {
     private static InputStreamReader inputStreamReader = null;
     private static BufferedReader breader;
 
+    private static Stage primaryStage;
+    private static Parent rootChat;
+    //Controller of the main window
     private static Controller controller = null;
+    //Controller of the login window
     private static LoginController loginController = null;
 
+    //Status of connection with server
     private static boolean connected = false;
+    //Status of logging to server
     private static boolean logged = false;
 
 
@@ -190,7 +200,7 @@ public class Main extends Application {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(Main.class.getResource("IRC.fxml"));
                 rootChat = loader.load();
-                controller = (Controller) loader.getController(); //TODO czy potrzebne
+                controller = loader.getController();
             } else {
                 System.out.println("Port empty.");
             }
@@ -220,7 +230,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("login.fxml"));
         Parent rootLogin = loader.load();
-        loginController = (LoginController) loader.getController();
+        loginController = loader.getController();
         primaryStage.setScene(new Scene(rootLogin));
         primaryStage.setTitle("IRC - Log In");
         primaryStage.show();
