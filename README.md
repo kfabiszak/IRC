@@ -1,6 +1,8 @@
 <h1>Komunikator internetowy typu IRC</h1>
 
 ---
+<h2>Serwer</h2>
+Korzysta z synchronizacji I/O multiplexing z funkcją select
 
 <h2>Protokół komunikacyjny</h2>
 
